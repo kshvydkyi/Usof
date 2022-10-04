@@ -2,8 +2,10 @@ const nodemailer = require('nodemailer');
 
 class SendMail {
     constructor(userEmail) {
-        this.from = 'usof.confirmation.kh@gmail.com';
-        this.password = 'vzfcmyxpzdahbnmv';
+        // this.from = 'usof.confirmation.kh@gmail.com';
+        // this.password = 'vzfcmyxpzdahbnmv';
+        this.from = 'kennedy.ernser@ethereal.email';
+        this.password = '6CqKm49M56V9mj5efN';
     }
     send(to, token, type) {
         const massageEmail = {};
@@ -63,7 +65,7 @@ class SendMail {
         <div class="text-div" style="justify-content: center">
         <p class="text">
             Thank you for registering on our website,
-                <a style="color:#fba92c;"class ="confirm-link" href="http://localhost:3500/api/auth/active/${token}">
+                <a style="color:#fba92c;"class ="confirm-link" href="http://localhost:3000/confirm-email/${token}">
                 click here
                 </a>
                 to confirm your email
@@ -141,7 +143,8 @@ class SendMail {
         `;
         }
         const mail = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
+            // host: 'smtp.gmail.com',
+            host: 'smtp.ethereal.email',
             port: 587,
             auth: {
                 user: this.from,

@@ -79,7 +79,7 @@ module.exports = (app) => {
     //Comments module
     app.route('/api/posts/:id/comments/:token').post(isAuthorized.isAutorised, commentsController.createComment);
 
-    app.route('/api/comments/:id/').get(commentsController.getCommentByIdUser);
+    app.route('/api/comments/:id').get(commentsController.getCommentByIdUser);
 
     app.route('/api/admin/comments/:id/:token').get(isAuthorized.isAutorised, commentsController.getCommentByIdAdmin);
 
