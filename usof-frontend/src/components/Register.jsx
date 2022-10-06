@@ -71,9 +71,9 @@ const Register = () => {
             setErrMsg("Invalid Entry");
             return;
         }
-        try{
-             const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ login: user,email: email, fullName:fullName ,password: pwd, passwordConfirmation: matchPwd}),
+        try {
+            const response = await axios.post(REGISTER_URL,
+                JSON.stringify({ login: user, email: email, fullName: fullName, password: pwd, passwordConfirmation: matchPwd }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
@@ -92,7 +92,7 @@ const Register = () => {
             }
             else if (err.response.data.values.message === `Email - ${email} invalid`) {
                 setErrMsg('Якийсь дивний email');
-            } 
+            }
             else if (err.response.data.values.message === `User with email - ${email} already exist`) {
                 setErrMsg('Цей email вже використовується');
             } else {
@@ -101,144 +101,146 @@ const Register = () => {
             errRef.current.focus();
         }
     }
-return (
-    <>
-        {success ? (
-            <section>
-                <h1>На ваш email було відправлено лист з підтвердженням</h1>
-                <p>
-                    Коли ви підтверите email, ви зможете 
-                    <a href="/login"> залогінитись</a> 
-                </p>
-            </section>
-        ) : (
-        <section>
-            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-            <h1>Реєстрація</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="username">
-                    Логін:
-                    <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
-                    <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} />
-                </label>
-                <input
-                    type="text"
-                    id="username"
-                    ref={userRef}
-                    autoComplete="off"
-                    onChange={(e) => setUser(e.target.value)}
-                    value={user}
-                    required
-                    aria-invalid={validName ? "false" : "true"}
-                    aria-describedby="uidnote"
-                    onFocus={() => setUserFocus(true)}
-                    onBlur={() => setUserFocus(false)}
-                />
-                <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    4-24 символи. Повинен починатись з літери. Дозволено: літери, числа, _ , - 
-                </p>
-                <label htmlFor="email">
-                    Елекронна пошта:
-                    <FontAwesomeIcon icon={faCheck} className={validEmail ? "valid" : "hide"} />
-                    <FontAwesomeIcon icon={faTimes} className={validEmail || !email ? "hide" : "invalid"} />
-                </label>
-                <input
-                    type="text"
-                    id="email"
-                    autoComplete="off"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                    required
-                    aria-invalid={validEmail ? "false" : "true"}
-                    aria-describedby="uidnote"
-                    onFocus={() => setEmailFocus(true)}
-                    onBlur={() => setEmailFocus(false)}
-                />
-                <p id="uidnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    Ваша пошта для підтвердження. 
-                </p>
-                <label htmlFor="full-name">
-                    Ваше ім'я або нікнейм:
-                    <FontAwesomeIcon icon={faCheck} className={validFullName ? "valid" : "hide"} />
-                    <FontAwesomeIcon icon={faTimes} className={validFullName || !fullName ? "hide" : "invalid"} />
-                </label>
-                <input
-                    type="text"
-                    id="full-name"
-                    autoComplete="off"
-                    onChange={(e) => setFullName(e.target.value)}
-                    value={fullName}
-                    required
-                    aria-invalid={validFullName ? "false" : "true"}
-                    aria-describedby="uidnote"
-                    onFocus={() => setFullNameFocus(true)}
-                    onBlur={() => setFullNameFocus(false)}
-                />
-                <p id="uidnote" className={fullNameFocus && fullName && !validFullName ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    Тут напишіть як до вас звертатись.
-                </p>
-                <label htmlFor="password">
-                    Пароль:
-                    <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
-                    <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
-                </label>
-                <input
-                    type="password"
-                    id="password"
-                    onChange={(e) => setPwd(e.target.value)}
-                    value={pwd}
-                    required
-                    aria-invalid={validPwd ? "false" : "true"}
-                    aria-describedby="pwdnote"
-                    onFocus={() => setPwdFocus(true)}
-                    onBlur={() => setPwdFocus(false)}
-                />
-                <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    8-24 символи. Повинен містити маленькі і великі літери, число, і щось з цього переліку:
-                    <span aria-label="exclamation mark"> ! </span> 
-                    <span aria-label="at symbol">@ </span> 
-                    <span aria-label="hashtag"># </span> 
-                    <span aria-label="dollar sign">$ </span> 
-                    <span aria-label="percent">%</span>
-                </p>
-
-
-                <label htmlFor="confirm_pwd">
-                    Підтвердіть пароль:
-                    <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
-                    <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} />
-                </label>
-                <input
-                    type="password"
-                    id="confirm_pwd"
-                    onChange={(e) => setMatchPwd(e.target.value)}
-                    value={matchPwd}
-                    required
-                    aria-invalid={validMatch ? "false" : "true"}
-                    aria-describedby="confirmnote"
-                    onFocus={() => setMatchFocus(true)}
-                    onBlur={() => setMatchFocus(false)}
-                />
-                <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    Повинен збігатись з полем вище.
-                </p>
-                <button disabled={!validName || !validPwd || !validMatch ? true : false}>Зареєструватись</button>
-            </form>
-            <p>
-                        Вже зареєстровані?<br />
-                        <span className="line">
-                            {/*put router link here*/}
-                            <a href="/login">Залогінитись</a>
-                        </span>
+    return (
+        <>
+            {success ? (
+                <section className="email-reg">
+                    <h1>Дякую за реєстрацію!</h1>
+                    <br></br>
+                    <p>
+                        На ваш email було відправлено лист з підтвердженням. Коли ви підтверите email, ви зможете <a href="/login"> залогінитись</a>
                     </p>
-        </section>
-        )}
-    </>
+                </section>
+            ) : (
+                <section>
+                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                    <h1>Реєстрація</h1>
+                    <form onSubmit={handleSubmit}>
+                        <label className="form_label" htmlFor="username">
+                            Логін:
+                            <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
+                            <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} />
+                        </label>
+                        <input
+                            className="form__field"
+                            type="text"
+                            id="username"
+                            ref={userRef}
+                            autoComplete="off"
+                            onChange={(e) => setUser(e.target.value)}
+                            value={user}
+                            required
+                            aria-invalid={validName ? "false" : "true"}
+                            aria-describedby="uidnote"
+                            onFocus={() => setUserFocus(true)}
+                            onBlur={() => setUserFocus(false)}
+                        />
+                        <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            4-24 символи. Починається з літери. Дозволено: літери, числа, _ , -
+                        </p>
+                        <label className="form_label" htmlFor="email">
+                            Елекронна пошта:
+                            <FontAwesomeIcon icon={faCheck} className={validEmail ? "valid" : "hide"} />
+                            <FontAwesomeIcon icon={faTimes} className={validEmail || !email ? "hide" : "invalid"} />
+                        </label>
+                        <input
+                            className="form__field"
+                            type="text"
+                            id="email"
+                            autoComplete="off"
+                            onChange={(e) => setEmail(e.target.value)}
+                            value={email}
+                            required
+                            aria-invalid={validEmail ? "false" : "true"}
+                            aria-describedby="uidnote"
+                            onFocus={() => setEmailFocus(true)}
+                            onBlur={() => setEmailFocus(false)}
+                        />
+                        <p id="uidnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            Ваша пошта для підтвердження.
+                        </p>
+                        <label className="form_label" htmlFor="full-name">
+                            Ваше ім'я або нікнейм:
+                            <FontAwesomeIcon icon={faCheck} className={validFullName ? "valid" : "hide"} />
+                            <FontAwesomeIcon icon={faTimes} className={validFullName || !fullName ? "hide" : "invalid"} />
+                        </label>
+                        <input
+                            className="form__field"
+                            type="text"
+                            id="full-name"
+                            autoComplete="off"
+                            onChange={(e) => setFullName(e.target.value)}
+                            value={fullName}
+                            required
+                            aria-invalid={validFullName ? "false" : "true"}
+                            aria-describedby="uidnote"
+                            onFocus={() => setFullNameFocus(true)}
+                            onBlur={() => setFullNameFocus(false)}
+                        />
+                        <p id="uidnote" className={fullNameFocus && fullName && !validFullName ? "instructions" : "offscreen"}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            Тут напишіть як до вас звертатись.
+                        </p>
+                        <label className="form_label" htmlFor="password">
+                            Пароль:
+                            <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
+                            <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
+                        </label>
+                        <input
+                            className="form__field"
+                            type="password"
+                            id="password"
+                            onChange={(e) => setPwd(e.target.value)}
+                            value={pwd}
+                            required
+                            aria-invalid={validPwd ? "false" : "true"}
+                            aria-describedby="pwdnote"
+                            onFocus={() => setPwdFocus(true)}
+                            onBlur={() => setPwdFocus(false)}
+                        />
+                        <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            8-24 символи. Містить маленькі і великі літери, число, і:
+                            <span aria-label="exclamation mark"> ! </span>
+                            <span aria-label="at symbol">@ </span>
+                            <span aria-label="hashtag"># </span>
+                            <span aria-label="dollar sign">$ </span>
+                            <span aria-label="percent">%</span>
+                        </p>
+
+
+                        <label className="form_label" htmlFor="confirm_pwd">
+                            Підтвердіть пароль:
+                            <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
+                            <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} />
+                        </label>
+                        <input
+                            className="form__field"
+                            type="password"
+                            id="confirm_pwd"
+                            onChange={(e) => setMatchPwd(e.target.value)}
+                            value={matchPwd}
+                            required
+                            aria-invalid={validMatch ? "false" : "true"}
+                            aria-describedby="confirmnote"
+                            onFocus={() => setMatchFocus(true)}
+                            onBlur={() => setMatchFocus(false)}
+                        />
+                        <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            Повинен збігатись з полем вище.
+                        </p>
+                        <button disabled={!validName || !validPwd || !validMatch || !validEmail || !validFullName ? true : false}>Зареєструватись</button>
+                    </form>
+                    <br></br>
+                    <p>
+                        Вже зареєстровані? <a href="/login">Залогінитись</a>
+                    </p>
+                </section>
+            )}
+        </>
     )
 }
 export default Register;

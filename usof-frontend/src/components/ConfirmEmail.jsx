@@ -1,6 +1,4 @@
-import { useRef, useState, useEffect } from "react";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from '../api/axios';
 
@@ -15,12 +13,13 @@ const ConfirmEmail = () =>{
             console.log('AVAV');
             try{
                 await axios.get(URL + token);
-                setActive("Активація успішна, ви зможете залогінитись через декілька секунд");
+                setActive("Активація пошти успішна, ви зможете залогінитись через декілька секунд");
                 setTimeout(()=> navigate('/login'), 5000);
             }
             catch(e){
                 console.log(e);
-                setActive("ЛОХ, РЕЄСТРУЙСЯ ЗАНОВО АХАХАХХАХАХХА");
+                setActive("Скоріш за все, ви не встигли активувати пошту. Спробуйте знову");
+                setTimeout(()=> navigate('/registration'), 5000);
 
             }
             
@@ -29,7 +28,11 @@ const ConfirmEmail = () =>{
         
     }, []);
  return(
-    <p>{active}</p>
+    <section className="email-reg">
+        <h1>Результат реєстрації</h1>
+        <br></br>
+        <p>{active}</p>
+    </section>
  )
 }
 

@@ -4,7 +4,7 @@ import axios from '../api/axios';
 
 const LOGIN_URL = '/api/auth/login';
 
-const Login = () =>{
+const Login = () => {
     const { setAuth } = useContext(AuthContext);
     const userRef = useRef();
     const errRef = useRef();
@@ -21,10 +21,10 @@ const Login = () =>{
     useEffect(() => {
         setErrMsg('');
     }, [user, pwd])
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
+        try {
             const response = await axios.post(LOGIN_URL,
                 JSON.stringify({ login: user, password: pwd }),
                 {
@@ -40,13 +40,13 @@ const Login = () =>{
             setPwd('');
             setSuccess(true);
         }
-        catch(err){
+        catch (err) {
             if (!err?.response) {
                 setErrMsg('Сервер спить');
             } else if (err.response.data.values.message === `User with login - ${user} does not exist`) {
                 setErrMsg('Користувача з таким логіном не існує');
-            } 
-            else if (err.response.data.values.message === 'Passwords do not match'){
+            }
+            else if (err.response.data.values.message === 'Passwords do not match') {
                 setErrMsg('Пароль не підходить');
             }
             else if (err.response?.status === 401) {
@@ -54,7 +54,7 @@ const Login = () =>{
             } else {
                 setErrMsg('Login Failed');
             }
-            errRef.current.focus(); 
+            errRef.current.focus();
 
         }
 
@@ -71,40 +71,44 @@ const Login = () =>{
                     </p>
                 </section>
             ) : (
-    <section>
-    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-    <h1>Вхід</h1>
-        <form onSubmit={handleSubmit}>
-        <label htmlFor="login">Логін:</label>
-        <input
-            type="text"
-            id="login"
-            ref={userRef}
-            autoComplete="off"
-            onChange={(e) => setUser(e.target.value)}
-            value={user}
-            required
-        />
-          <label htmlFor="password">Пароль:</label>
-        <input
-            type="password"
-            id="password"
-            onChange={(e) => setPwd(e.target.value)}
-            value={pwd}
-            required
-        />
-          <button>Вхід</button>
-        </form>
-        <p>
-            В тебе немає аккаунту? <a href="/registration">Зареєструватись</a>
-        </p>
-        <p>
-            Забули пароль? <a href="/reset-password">Відновити пароль</a>
-        </p>
-    </section>
-    
-        )}
-    
+                <section>
+                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                    <h1>Вхід</h1>
+                    <form onSubmit={handleSubmit}>
+                        <label className="form_label" htmlFor="login">Логін:</label>
+                        <input
+                            type="text"
+                            className="form__field"
+                            id="login"
+                            ref={userRef}
+                            autoComplete="off"
+                            onChange={(e) => setUser(e.target.value)}
+                            value={user}
+                            required
+                        />
+                        <label className="login-lbl" htmlFor="password">Пароль:</label>
+                        <input
+                            type="password"
+                            className="form__field"
+                            id="password"
+                            onChange={(e) => setPwd(e.target.value)}
+                            value={pwd}
+                            required
+                        />
+                        <button className="login-btn">Вхід</button>
+                    </form>
+                    <br></br>
+                    <p>
+                        В тебе немає аккаунту? <a href="/registration">Зареєструватись</a>
+                    </p>
+                    <br></br>
+                    <p>
+                        Забули пароль? <a href="/reset-password">Відновити пароль</a>
+                    </p>
+                </section>
+
+            )}
+
         </>
     )
 }

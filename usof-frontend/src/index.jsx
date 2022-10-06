@@ -7,7 +7,7 @@ import { AuthProvider } from './context/AuthProvider';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <AuthProvider >
-    <App />
+        <App />
     </AuthProvider>
 );
 
