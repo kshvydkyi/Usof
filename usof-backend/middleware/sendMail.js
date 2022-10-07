@@ -131,7 +131,7 @@ class SendMail {
         <div class="text-div" style="justify-content: center">
         <p class="text">
              You requested for reset password,
-                <a style="color:#fba92c;"class ="confirm-link" href="http://localhost:3500/api/auth/password-reset/${token}">
+                <a style="color:#fba92c;"class ="confirm-link" href="http://localhost:3000/reset-password/${token}">
                 click here
                 </a>
                 to reset your password

@@ -120,15 +120,15 @@ exports.passwordReset = async (req, res) =>{
 exports.passwordResetWithConfirmToken = async (req, res) =>{
     const {password, confirmPassword} = req.body;
     const {confirm_token} = req.params;
-    const userData = jwt.verify(confirm_token, config.jwt);
+    
     if(password === confirmPassword){
         if(checkPass.passwordStrength(password).value === 'Too weak' || checkPass.passwordStrength(password).value === 'Weak'){
             return response.status(400, {message: 'The password is too easy'}, res);
         }
         const salt = bcrypt.genSaltSync(15);
         const encryptedPass = bcrypt.hashSync(password, salt);
-        try{
-
+        try{ 
+            const userData = jwt.verify(confirm_token, config.jwt); 
             await User.updateValues('password', encryptedPass, userData.id)
             response.status(200, {message:`Password updated`}, res);
         }

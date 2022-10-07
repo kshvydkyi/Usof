@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from '../context/AuthProvider';
 import axios from '../api/axios';
+import { useNavigate } from "react-router-dom";
 
 const LOGIN_URL = '/api/auth/login';
 
@@ -13,6 +14,8 @@ const Login = () => {
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         userRef.current.focus();
@@ -39,6 +42,7 @@ const Login = () => {
             setUser('');
             setPwd('');
             setSuccess(true);
+            navigate('/Posts');
         }
         catch (err) {
             if (!err?.response) {
