@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from '../api/axios';
+import SpinnerLoading from "./Spinner";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -35,6 +36,8 @@ const Register = () => {
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
         userRef.current.focus();
@@ -72,6 +75,7 @@ const Register = () => {
             return;
         }
         try {
+            setLoading(true);
             const response = await axios.post(REGISTER_URL,
                 JSON.stringify({ login: user, email: email, fullName: fullName, password: pwd, passwordConfirmation: matchPwd }),
                 {
@@ -81,8 +85,10 @@ const Register = () => {
             );
             console.log(response?.data.status, response?.data.values.message);
             setSuccess(true);
+            setLoading(false);
         }
         catch (err) {
+            setLoading(false);
             console.log(err.response.data.values.message);
             if (!err?.response) {
                 setErrMsg('Сервер спить, вибачте');
@@ -232,7 +238,7 @@ const Register = () => {
                             <FontAwesomeIcon icon={faInfoCircle} />
                             Повинен збігатись з полем вище.
                         </p>
-                        <button disabled={!validName || !validPwd || !validMatch || !validEmail || !validFullName ? true : false}>Зареєструватись</button>
+                        <button disabled={!validName || !validPwd || !validMatch || !validEmail || !validFullName || isLoading ? true : false}>{isLoading ? <SpinnerLoading /> : 'Зареєструватись'}</button>
                     </form>
                     <br></br>
                     <p>

@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from '../api/axios';
-
+import SpinnerLoading from "./Spinner";
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const RESETPASS_URL = '/api/auth/password-reset';
 
@@ -12,6 +12,8 @@ const ResetPassword = () => {
     const [email, setEmail] = useState('');
     const [validEmail, setValidEmail] = useState(false);
     const [emailFocus, setEmailFocus] = useState(false);
+
+    const [isLoading, setLoading] = useState(false);
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
@@ -28,6 +30,7 @@ const ResetPassword = () => {
             return;
         }
         try{
+            setLoading(true);
             const response = await axios.post(RESETPASS_URL, 
                 JSON.stringify({email: email}),
                 {
@@ -37,8 +40,10 @@ const ResetPassword = () => {
             )
             console.log(response?.data.status, response?.data.values.message);
             setSuccess(true);
+            setLoading(false);
         }
         catch(err){
+            setLoading(false);
             if (!err?.response) {
                 setErrMsg('Сервер спить, вибачте');
             }
@@ -88,7 +93,7 @@ const ResetPassword = () => {
                             <FontAwesomeIcon icon={faInfoCircle} />
                             Ваша пошта для відновлення паролю.
                         </p>
-                        <button>Відновити пароль</button>
+                        <button disabled={isLoading}>{isLoading ? <SpinnerLoading /> : 'Відновити пароль'}</button>
                     </form>
         </section>
             )}

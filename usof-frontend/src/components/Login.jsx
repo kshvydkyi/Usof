@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from '../context/AuthProvider';
 import axios from '../api/axios';
+import SpinnerLoading from "./Spinner";
 import { useNavigate } from "react-router-dom";
 
 const LOGIN_URL = '/api/auth/login';
@@ -9,6 +10,8 @@ const Login = () => {
     const { setAuth } = useContext(AuthContext);
     const userRef = useRef();
     const errRef = useRef();
+
+    const [isLoading, setLoading] = useState(false);
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
@@ -28,6 +31,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true);
             const response = await axios.post(LOGIN_URL,
                 JSON.stringify({ login: user, password: pwd }),
                 {
@@ -42,9 +46,11 @@ const Login = () => {
             setUser('');
             setPwd('');
             setSuccess(true);
+            setLoading(false);
             navigate('/Posts');
         }
         catch (err) {
+            setLoading(false);
             if (!err?.response) {
                 setErrMsg('Сервер спить');
             } else if (err.response.data.values.message === `User with login - ${user} does not exist`) {
@@ -99,7 +105,7 @@ const Login = () => {
                             value={pwd}
                             required
                         />
-                        <button className="login-btn">Вхід</button>
+                        <button className="login-btn" disabled={isLoading}>{isLoading ? <SpinnerLoading /> : 'Вхід'}</button>
                     </form>
                     <br></br>
                     <p>

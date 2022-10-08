@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from '../api/axios';
+import SpinnerLoading from "./Spinner";
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const RESETPASS_URL = `/api/auth/password-reset/`;
@@ -20,6 +21,8 @@ const ResetPasswordWT = () =>{
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
 
+    const [isLoading, setLoading] = useState(false);
+
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
@@ -27,28 +30,6 @@ const ResetPasswordWT = () =>{
         setValidPwd(PWD_REGEX.test(pwd));
         setValidMatch(pwd === matchPwd);
     }, [pwd, matchPwd]);
-
-
-//     const [active, setActive] = useState('Зараз чекаємо на активацію пошти');
-//     useEffect(()=>{
-//         const fetch = async () => {
-//            console.log('AVAV');
-//            try{
-//                await axios.post(RESETPASS_URL + confirm_token);
-//                setActive("Активація пошти успішна, ви зможете залогінитись через декілька секунд");
-//                setTimeout(()=> navigate('/login'), 5000);
-//            }
-//            catch(e){
-//                console.log(e);
-//                setActive("Скоріш за все, ви не встигли активувати пошту. Спробуйте знову");
-//                setTimeout(()=> navigate('/registration'), 5000);
-
-//            }
-           
-//        }
-//        fetch();
-       
-//    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -58,6 +39,7 @@ const ResetPasswordWT = () =>{
             return;
         }
         try {
+            setLoading(true);
             const response = await axios.post(RESETPASS_URL + confirm_token,
                 JSON.stringify({password: pwd, confirmPassword: matchPwd}),
                 {
@@ -67,9 +49,11 @@ const ResetPasswordWT = () =>{
             );
             console.log(response?.data.status, response?.data.values.message);
             setSuccess(true);
+            setLoading(false);
             setTimeout(()=> navigate('/login'), 5000);
         }
         catch (err) {
+            setLoading(false);
             console.log(err);
             if (!err?.response) {
                 setErrMsg('Сервер спить, вибачте');
@@ -143,7 +127,7 @@ const ResetPasswordWT = () =>{
                         <FontAwesomeIcon icon={faInfoCircle} />
                         Повинен збігатись з полем вище.
                     </p>
-                    <button disabled={!validPwd || !validMatch ? true : false}>Відновити пароль</button>
+                    <button disabled={!validPwd || !validMatch || isLoading ? true : false}>{isLoading ? <SpinnerLoading /> : 'Відновити пароль'}</button>
                 </form>
             </section>
         )}
