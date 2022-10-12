@@ -6,7 +6,7 @@ const WelcomePage = () => {
         <seaction className='nav-bar-auth'>
             <a className=''href="/registration">Реєстрація</a>
             <a href="/login">Вхід</a>
-            <a href="/posts">Подивитися пріколи</a>
+            <a href="/posts/?page=1">Подивитися пріколи</a>
         </seaction>
         </>
     )

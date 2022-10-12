@@ -7,7 +7,7 @@ class Post extends Model {
         super();
     }
     async getActivePosts(){
-        const sql = await this.DB.query("SELECT author_id, title, content, image, status, publish_date FROM posts WHERE status = 'active'");
+        const sql = await this.DB.query("SELECT id, author_id, title, content, image, status, publish_date FROM posts WHERE status = 'active'");
         return sql[0];
     }
     async getAllPosts(){
@@ -18,10 +18,18 @@ class Post extends Model {
         const sql = await this.DB.query("SELECT author_id, title, content, image, status, publish_date FROM posts WHERE id = '"+ id +"'");
         return sql[0].length === 0 ? false : sql[0];
     }
+    async addPostToCategory(categories, [{id}]){
+        Object.entries(categories).forEach( async ([,value]) => {
+            await this.DB.query("INSERT INTO categories_posts(post_id, category_id) VALUES('"+id+"', '"+value+"')");
+        })
+    }
     async createPost({title, content, image, ...categories}, author_id){
         const sql = await this.DB.query("INSERT INTO posts(author_id, title, content, image, publish_date) VALUES ('"+author_id+"', '"+title+"', '"+content+"', '"+image+"', CURRENT_TIMESTAMP())");
         const getId = await this.DB.query("SELECT id FROM posts WHERE title = '"+title+"'");
-        await Category.addPostToCategory(categories, getId[0]);
+        console.log(getId[0][0].id);
+        Object.entries(categories).forEach( async ([,value]) => {
+            await this.DB.query("INSERT INTO categories_posts(post_id, category_id) VALUES('"+getId[0][0].id+"', '"+value+"')");
+        })
         return;
 
     }

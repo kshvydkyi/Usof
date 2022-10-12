@@ -18,7 +18,7 @@ exports.getActivePosts = async (req, res) =>{
 
         )=> {
              const date = new Date(item.publish_date);
-             const publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+            //  const publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
              const [{login}] = await User.getLogin(item.author_id);
              return {
                  author: login,
@@ -26,7 +26,9 @@ exports.getActivePosts = async (req, res) =>{
                  content: item.content,
                  image: item.image,
                  status: item.status,
-                 publish_date
+                 publish_date: date,
+                 id: item.id
+                
              }
             }
         )
@@ -51,13 +53,13 @@ exports.getPersonalPosts = async (req, res) => {
         const parsedPage = page ? Number(page) : 1;
         const perPage = 10;
         const allPages = await Post.getPersonalPosts(userData.userId);
-        allPages.map(  ( item
+        // allPages.map(  ( item
 
-            )=> {
-                const date = new Date(item.publish_date);
-                item.publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-            }
-        )
+        //     )=> {
+        //         const date = new Date(item.publish_date);
+        //         item.publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+        //     }
+        // )
         const totalPages = Math.ceil(allPages.length / perPage);
         const usersFilter = allPages.slice(
             parsedPage * perPage - perPage,
@@ -88,12 +90,13 @@ exports.getAllPosts = async (req, res) => {
                 const publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
                 const [{login}] = await User.getLogin(item.author_id);
                 return {
+                    id: item.id,
                     author: login,
                     title: item.title,
                     content: item.content,
                     image: item.image,
                     status: item.status,
-                    publish_date
+                    publish_date: date
                 }
             }
         )
@@ -114,8 +117,8 @@ exports.getAllPosts = async (req, res) => {
 exports.getActivePostById = async (req, res) =>{
     let id = req.params.id;
     const post = await Post.getPostById(id);
-    const date = new Date(post[0].publish_date);
-    post[0].publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+    // const date = new Date(post[0].publish_date);
+    // post[0].publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
     const [{login}] = await User.getLogin(post[0].author_id);
     delete post[0].author_id;
     post[0].author = login;
@@ -136,8 +139,8 @@ exports.getPostByIdAdmin = async (req, res) => {
     }
     let id = req.params.id;
     const post = await Post.getPostById(id);
-    const date = new Date(post[0].publish_date);
-    post[0].publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+    // const date = new Date(post[0].publish_date);
+    // post[0].publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
     const [{login}] = await User.getLogin(post[0].author_id);
     delete post[0].author_id;
     post[0].author = login;
@@ -168,7 +171,6 @@ exports.createNewPost = async (req, res) =>{
     const userData = jwt.verify(token, config.jwt);
     const authorId = userData.userId;
     const {title, content, image, ...categories} = req.body;
-    // console.log(categories);
     if(!title || !content || !categories){
        return response.status(400, {message: `Fill in all fields`}, res);
     }
@@ -180,6 +182,7 @@ exports.createNewPost = async (req, res) =>{
         response.status(200, {message:"Post created without image"}, res);
     }
     catch (e){
+        console.log(e);
         response.status(500, {message: `${e}`}, res);
     }
 }

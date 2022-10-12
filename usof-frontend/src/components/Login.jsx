@@ -81,7 +81,7 @@ const Login = () => {
                     </p>
                 </section>
             ) : (
-                <section>
+                <section className='login'>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Вхід</h1>
                     <form onSubmit={handleSubmit}>
