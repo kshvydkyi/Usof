@@ -26,7 +26,6 @@ class Post extends Model {
     async createPost({title, content, image, ...categories}, author_id){
         const sql = await this.DB.query("INSERT INTO posts(author_id, title, content, image, publish_date) VALUES ('"+author_id+"', '"+title+"', '"+content+"', '"+image+"', CURRENT_TIMESTAMP())");
         const getId = await this.DB.query("SELECT id FROM posts WHERE title = '"+title+"'");
-        console.log(getId[0][0].id);
         Object.entries(categories).forEach( async ([,value]) => {
             await this.DB.query("INSERT INTO categories_posts(post_id, category_id) VALUES('"+getId[0][0].id+"', '"+value+"')");
         })

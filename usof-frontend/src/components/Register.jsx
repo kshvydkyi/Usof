@@ -89,7 +89,6 @@ const Register = () => {
         }
         catch (err) {
             setLoading(false);
-            console.log(err.response.data.values.message);
             if (!err?.response) {
                 setErrMsg('Сервер спить, вибачте');
             }
@@ -112,7 +111,6 @@ const Register = () => {
             {success ? (
                 <section className="email-reg">
                     <h1>Дякую за реєстрацію!</h1>
-                    <br></br>
                     <p>
                         На ваш email було відправлено лист з підтвердженням. Коли ви підтверите email, ви зможете <a href="/login"> залогінитись</a>
                     </p>
@@ -240,7 +238,6 @@ const Register = () => {
                         </p>
                         <button disabled={!validName || !validPwd || !validMatch || !validEmail || !validFullName || isLoading ? true : false}>{isLoading ? <SpinnerLoading /> : 'Зареєструватись'}</button>
                     </form>
-                    <br></br>
                     <p>
                         Вже зареєстровані? <a href="/login">Залогінитись</a>
                     </p>

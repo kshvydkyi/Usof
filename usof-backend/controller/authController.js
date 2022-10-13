@@ -74,7 +74,6 @@ exports.login = async (req, res) => {
         return response.status(409, {message:`User with login - ${login} does not exist`}, res);
     }
     const userData = await User.login(login);
-    console.log(userData);
    const isCorrectPassword = await bcrypt.compare(password, userData[0].password);
    if(isCorrectPassword){
        const token = jwt.sign({
@@ -83,7 +82,7 @@ exports.login = async (req, res) => {
            role: userData[0].role
        }, config.jwt, {expiresIn: '30d'});
        await User.updateValues('tmp_token', token, userData[0].id)
-        response.status(200, {token: `${token}`}, res)
+        response.status(200, {token: `${token}`,  role: userData[0].role}, res)
    }
    else{
        response.status(422, {message: `Passwords do not match`}, res);
@@ -99,11 +98,9 @@ exports.logout = async (req, res) =>{
 
 exports.passwordReset = async (req, res) =>{
     const {email} = req.body;
-    console.log(email);
     if(await User.isEmailExist(email)){
         try {
             const [{id, login}] = await User.initUser(email);
-            console.log(id, login);
             const token = jwt.sign({
                 id, login
             }, config.jwt, {expiresIn: '15m'});

@@ -81,7 +81,6 @@ exports.getAllCommentsInPostUser = async (req, res) => {
                 const date = new Date(item[0].publish_date);
                 const publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
                 const [{login}] = await User.getLogin(item[0].author_id);
-                console.log(login);
                 return {
                     author: login,
                     content: item[0].content,
@@ -123,7 +122,6 @@ exports.getAllCommentsInPostAdmin = async (req, res) => {
                 const date = new Date(item[0].publish_date);
                 const publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
                 const [{login}] = await User.getLogin(item[0].author_id);
-                console.log(login);
                 return {
                     author: login,
                     content: item[0].content,
@@ -185,7 +183,6 @@ exports.setStatusComment = async (req, res) =>{
             response.status(200, {message: "Status Changed"}, res);
         }
         catch (e){
-            console.log(e);
             response.status(500, {message: `${e}`}, res);
         }
 

@@ -28,7 +28,6 @@ const Posts = () => {
 
 	}, []);
 	console.log(posts);
-	console.log(totalPages);
 	return (
 		<div className="posts-block">
 			<h2>Posts</h2>

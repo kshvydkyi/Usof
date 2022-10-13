@@ -13,7 +13,6 @@ exports.getAllUsers = async (req, res) => {
         response.status(200, allUsers, res);
     }
     catch(e){
-        console.log(e);
         response.status(400, {message: `${e}`}, res);
     }
 
@@ -92,12 +91,10 @@ exports.updateUserData = async (req, res) => {
     }
 
 }
-
 exports.deleteUser = async (req, res) => {
     const id = req.params.user_id;
     const token = req.params.token;
     const userData = jwt.verify(token, config.jwt);
-    console.log(userData);
     if(+id !== userData.userId || userData.role !== 'Admin'){
         return response.status(403, {message:"Access denied"}, res)
     }

@@ -1,13 +1,14 @@
-import { useRef, useState, useEffect, useContext } from "react";
-import AuthContext from '../context/AuthProvider';
+import { useRef, useState, useEffect } from "react";
 import axios from '../api/axios';
 import SpinnerLoading from "./Spinner";
-import { useNavigate } from "react-router-dom";
+import {useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+
 
 const LOGIN_URL = '/api/auth/login';
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext);
+    const { setAuth } = useAuth();
     const userRef = useRef();
     const errRef = useRef();
 
@@ -16,9 +17,10 @@ const Login = () => {
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/posts/?page=1'
 
     useEffect(() => {
         userRef.current.focus();
@@ -39,15 +41,15 @@ const Login = () => {
                     withCredentials: true
                 }
             );
-            console.log(response?.data.status, response?.data?.values.token);
+            console.log(response?.data.status, response?.data?.values);
             const accessToken = response?.data?.values.token;
-            console.log(accessToken);
-            setAuth({ user, pwd, accessToken });
+            const role = response?.data?.values.role;
+            setAuth({ user, accessToken, role});
+            localStorage.setItem('autorized', JSON.stringify({user, accessToken, role}))
             setUser('');
             setPwd('');
-            setSuccess(true);
             setLoading(false);
-            navigate('/Posts');
+            navigate(from, {replace: true});
         }
         catch (err) {
             setLoading(false);
@@ -71,16 +73,6 @@ const Login = () => {
     }
 
     return (
-        <>
-            {success ? (
-                <section>
-                    <h1>You are logged in!</h1>
-                    <br />
-                    <p>
-                        <a href="#">Go to Home</a>
-                    </p>
-                </section>
-            ) : (
                 <section className='login'>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Вхід</h1>
@@ -107,19 +99,15 @@ const Login = () => {
                         />
                         <button className="login-btn" disabled={isLoading}>{isLoading ? <SpinnerLoading /> : 'Вхід'}</button>
                     </form>
-                    <br></br>
+                 
                     <p>
                         В тебе немає аккаунту? <a href="/registration">Зареєструватись</a>
                     </p>
-                    <br></br>
+                    
                     <p>
                         Забули пароль? <a href="/reset-password">Відновити пароль</a>
                     </p>
                 </section>
-
-            )}
-
-        </>
     )
 }
 

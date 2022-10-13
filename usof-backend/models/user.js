@@ -90,7 +90,6 @@ class User extends Model {
     async ratingPlus(userId){
         const [rating] = await this.DB.query("SELECT rating FROM users WHERE id = '"+userId+"'");
         const newRating = rating[0].rating +1;
-        console.log(newRating);
         const sql = await this.DB.query("UPDATE users SET rating = '"+newRating+"' WHERE id = '"+userId+"'");
         return;
     }

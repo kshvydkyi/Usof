@@ -62,14 +62,13 @@ const ResetPassword = () => {
         {success ? (
                 <section className="reset-passSection email-reg">
                     <h1>Відновлення паролю</h1>
-                    <br />
+                    
                     <p className="reset-msg">Посилання на відновлення паролю було відправлено на ваш email.</p>
                 </section>
             ) : (
         <section className="reset-passSection">
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <h1>Відновлення паролю</h1>
-            <br></br>
             <form onSubmit={resetPassword}>
              <label className="form_label" htmlFor="email">
                             Елекронна пошта:

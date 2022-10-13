@@ -54,7 +54,6 @@ const ResetPasswordWT = () =>{
         }
         catch (err) {
             setLoading(false);
-            console.log(err);
             if (!err?.response) {
                 setErrMsg('Сервер спить, вибачте');
             }
@@ -70,7 +69,6 @@ const ResetPasswordWT = () =>{
         {success ? (
             <section className="email-reg">
                 <h1>Ваш пароль відновлено</h1>
-                <br></br>
                 <p>Ви зможете залогінитись через декілька секунд</p>
             </section>
         ) : (

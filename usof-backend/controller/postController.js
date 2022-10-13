@@ -14,7 +14,8 @@ exports.getActivePosts = async (req, res) =>{
         const parsedPage = page ? Number(page) : 1;
         const perPage = 10;
         const allPages = await Post.getActivePosts();
-        const data = allPages.map(async( item
+        const reversedPosts = allPages.reverse();
+        const data = reversedPosts.map(async( item
 
         )=> {
              const date = new Date(item.publish_date);
@@ -53,6 +54,7 @@ exports.getPersonalPosts = async (req, res) => {
         const parsedPage = page ? Number(page) : 1;
         const perPage = 10;
         const allPages = await Post.getPersonalPosts(userData.userId);
+        const reversedPosts = allPages.reverse();
         // allPages.map(  ( item
 
         //     )=> {
@@ -60,8 +62,8 @@ exports.getPersonalPosts = async (req, res) => {
         //         item.publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
         //     }
         // )
-        const totalPages = Math.ceil(allPages.length / perPage);
-        const usersFilter = allPages.slice(
+        const totalPages = Math.ceil(reversedPosts.length / perPage);
+        const usersFilter = reversedPosts.slice(
             parsedPage * perPage - perPage,
             parsedPage * perPage
         );
@@ -83,7 +85,8 @@ exports.getAllPosts = async (req, res) => {
         const parsedPage = page ? Number(page) : 1;
         const perPage = 10;
         const allPages = await Post.getAllPosts();
-        const data = allPages.map(async( item
+        const reversedPosts = allPages.reverse();
+        const data = reversedPosts.map(async( item
 
             )=> {
                 const date = new Date(item.publish_date);
@@ -182,7 +185,7 @@ exports.createNewPost = async (req, res) =>{
         response.status(200, {message:"Post created without image"}, res);
     }
     catch (e){
-        console.log(e);
+        
         response.status(500, {message: `${e}`}, res);
     }
 }
@@ -250,7 +253,6 @@ exports.updateImage = async (req, res) => {
     const token = req.params.token;
     const userData = jwt.verify(token, config.jwt);
     const post = await Post.getPostById(postId);
-    console.log(post);
     if(+post[0].author_id !== userData.userId){
         return response.status(403, {message:"Access denied"}, res)
     }
@@ -298,7 +300,6 @@ exports.updateCategoriesForPost = async (req, res) => {
         const delCategory = idOldCategory.filter(
             (item) => !idNewCategory.includes(item)
         );
-        console.log(delCategory, idOldCategory, idNewCategory);
         if(delCategory.length === idOldCategory.length){
             idNewCategory.forEach(async (item) => await Category.updateCategoriesForPostAdd(id, item));
         }
