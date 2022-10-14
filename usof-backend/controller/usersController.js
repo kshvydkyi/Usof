@@ -56,7 +56,9 @@ exports.getUserById = async (req, res) => {
 }
 
 exports.uploadAvatar = async (req, res) => {
-    const pathFile = req.file.path.split('\\').join('/');
+    // const pathFile = req.file.path.split('\\').join('/');
+    const pathFile = req.file.filename;
+    console.log(pathFile)
     const token = req.params.token;
     const userData = jwt.verify(token, config.jwt);
     try{

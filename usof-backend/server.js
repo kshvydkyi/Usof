@@ -11,11 +11,15 @@ const corsOptions ={
 const app = express();
 const port = process.env.PORT || 3500;
 
+
+
 app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 require('./middleware/passport')(passport)
+app.use('/avatars', express.static(`${__dirname}/assets/avatars`));
+app.use('/post-pictures', express.static(`${__dirname}/assets/picture-post`));
 
 
 const routes = require('./settings/routes');

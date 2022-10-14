@@ -8,12 +8,13 @@ CREATE TABLE IF NOT EXISTS users (
     login VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL,
     full_name VARCHAR(255) NOT NULL,
-    photo VARCHAR(255) NOT NULL DEFAULT 'assets/avatars/default_avatar.png',
+    photo VARCHAR(255) NOT NULL DEFAULT 'default_avatar.png',
     email VARCHAR(50) NOT NULL,
     role ENUM('Admin', 'User') DEFAULT 'User',
 	rating INT NOT NULL DEFAULT 0,
 	tmp_token VARCHAR(255)
     );
+
 CREATE TABLE IF NOT EXISTS categories
 (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

@@ -212,7 +212,7 @@ exports.updatePostUser = async (req, res) => {
     }
 }
 exports.addPictureToPost = async (req, res) =>{
-    const pathFile = req.file.path.split('\\').join('/');
+    const pathFile = req.file.filename;
     const token = req.params.token;
     const userData = jwt.verify(token, config.jwt);
     try{

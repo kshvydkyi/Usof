@@ -2,9 +2,10 @@ const multer = require('multer');
 
 const fileStorageEngineAvatar = multer.diskStorage({
     destination: (_req, _file, cb) => {
-        cb(null, './assets/avatars/');
+        cb(null, './assets/avatars');
     },
     filename: (_req, file, cb) => {
+        console.log('aboba')
         cb(null, `${Date.now()}-${file.originalname}`);
     },
 });

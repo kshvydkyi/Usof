@@ -75,7 +75,7 @@ button {
     color:whitesmoke;
     font-size: 18px;
     border: none;
-    border-bottom: 1px solid grey;
+    border: 1px solid grey;
 }
 button:hover{
     background-color: rgb(66, 15, 112);
@@ -282,4 +282,69 @@ li[class] {
 }
 .posts-block>h2{
     text-align: center;
+}
+
+.create-post{
+    padding: 10px;
+    background-color: rgb(26, 26, 26);
+}
+
+.create-post-field{
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border: 1px solid #9b9b9b;
+    outline: 0;
+    font-size: 18px;
+    color: #fff;
+    padding: 5px;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+
+.create-post-field:focus{
+    font-weight: 400;
+    border-width: 1px;
+    border-image: linear-gradient(to right, rgb(142, 51, 222), rgb(90, 20, 152));
+    border-image-slice: 1;
+}
+.create-post-content{
+    background: none;
+    color:white;
+    border: 1px solid #9b9b9b;
+    outline: 0;
+    font-size: 18px;
+    padding: 5px;
+    background: transparent;
+    transition: border-color 0.2s;
+    resize: none;
+}
+
+body::-webkit-scrollbar {
+    width: 5px;              
+  }
+body::-webkit-scrollbar-track {
+    background: black;       
+  }
+  
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(90, 20, 152);  
+    border-radius: 10px;   
+}
+.create-post-content::-webkit-scrollbar {
+    width: 5px;            
+}
+.create-post-content::-webkit-scrollbar-track {
+    background: black;       
+  }
+  
+  .create-post-content::-webkit-scrollbar-thumb {
+    background-color: rgb(90, 20, 152);  
+    border-radius: 10px;   
+}
+.create-post-content:focus{
+    font-weight: 400;
+    border-width: 1px;
+    border-image: linear-gradient(to right, rgb(142, 51, 222), rgb(90, 20, 152));
+    border-image-slice: 1;
 }

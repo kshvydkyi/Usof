@@ -41,6 +41,7 @@ const Posts = () => {
 							<div className="post-card">
 								<h2 className="post-title">{post.title}</h2>
 								<p className="post-author">{post.author}</p>
+								<img src={`http://localhost:3500/post-pictures/${post.image}`} height={40} width={40} alt='admin eblan'/>
 								<p className="post-body">{post.content}</p>
 								<p>{formatedDate}</p>
 							</div>

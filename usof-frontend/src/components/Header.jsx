@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
-import logo from '../assets/images/navbar/anonymous-guy-fawkes-mask.png'
+import logo from '../assets/images/navbar/logo.png'
 import useAuth from '../hooks/useAuth';
 
 const LOGOUT = '/api/auth/logout/'
@@ -37,9 +37,14 @@ const Header = () =>{
         <div className="wrapper-navbar">
         <nav className="navbar">
             <a href='/'><img src={logo} alt='logo' height={40}/></a>
-            <p>My own USOF(here must be name)</p>
+            <a href='/posts/?page=1'>Базований</a>
             <div className='nav-bar-auth'>
-                {auth ? (<button onClick={logout}>LoGOUT</button>) : (
+                {auth ? (
+                <>
+                    <button onClick={logout}>Вийти</button> 
+                    <a href='/create-post'>Cтворити базу</a>
+                </>
+                ) : (
                 <>
                 <a href="/login">Логін</a>
                 <a href="/registration">Реєстрація</a>

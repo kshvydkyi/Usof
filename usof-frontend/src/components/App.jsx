@@ -13,6 +13,7 @@ import Admin from './Admin';
 import User from './User';
 import RequreAuth from './RequireAuth';
 import Unauthorized from './Unauthorized';
+import CreatePost from './CreatePost';
 
 function App() {
 	return (
@@ -30,6 +31,7 @@ function App() {
 				{/* only authorized users */}
 				<Route element={<RequreAuth allowedRoles={['User', 'Admin']}/>} >
 					<Route path='user' element={<User />} />
+					<Route path='create-post' element={<CreatePost />} />
 					</Route>
 				<Route element={<RequreAuth allowedRoles={['Admin']}/>} >
 					<Route path='admin' element={<Admin />} />
