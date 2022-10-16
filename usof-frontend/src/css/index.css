@@ -84,6 +84,8 @@ button:disabled{
     color: darkgrey;
     background: none;
 }
+
+
 .login-btn{
     margin-top: 30px;
 }
@@ -277,8 +279,10 @@ li[class] {
     margin: 10px;
     padding: 10px;
     display: flex;
+    min-width: 800px;
     flex-direction: column;
     border-radius: 10px;
+    align-items: center;
 }
 .posts-block>h2{
     text-align: center;
@@ -348,3 +352,60 @@ body::-webkit-scrollbar-thumb {
     border-image: linear-gradient(to right, rgb(142, 51, 222), rgb(90, 20, 152));
     border-image-slice: 1;
 }
+
+.container-posts{
+    display:flex;
+    justify-content: space-around;
+}
+
+.create-post-forms{
+    display: flex;
+}
+.btn {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'PT Sans', sans-serif;
+    transition: 0.5s;
+    background: rgb(71, 71, 71);
+    color:#2c2c2c;
+    color:whitesmoke;
+    font-size: 18px;
+    border: none;
+    border: 1px solid grey;
+}
+.btn:hover{
+    background-color: rgb(66, 15, 112);
+}
+.btn:disabled{
+    color: darkgrey;
+    background: none;
+}
+
+.file-select::file-selector-button {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'PT Sans', sans-serif;
+    transition: 0.5s;
+    background: rgb(71, 71, 71);
+    color:#2c2c2c;
+    color:whitesmoke;
+    font-size: 18px;
+    border: none;
+    border: 1px solid grey;
+}
+.file-select::file-selector-button{
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'PT Sans', sans-serif;
+    transition: 0.5s;
+    background: rgb(71, 71, 71);
+    color:#2c2c2c;
+    color:whitesmoke;
+    font-size: 16px;
+    border: none;
+    border: 1px solid grey;
+}
+

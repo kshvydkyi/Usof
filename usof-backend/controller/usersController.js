@@ -109,4 +109,16 @@ exports.deleteUser = async (req, res) => {
     response.status(200, {message: `User with id = ${id} deleted`}, res);
 }
 
+exports.checkToken = async (req, res) => {
+    const token = req.params.token;
+    try{
+        jwt.verify(token, config.jwt);
+        response.status(200, {message:`token alive`}, res);
+    }
+    catch (e){
+        response.status(401, {message:`token dead`}, res);
+    }
+   
+}
+
 

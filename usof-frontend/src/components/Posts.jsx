@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts, selectors } from '../slices/postSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
+import route from '../api/route';
 
 const Pages = ({totalPages}) =>{
 	let pages = [];
@@ -31,6 +32,7 @@ const Posts = () => {
 	return (
 		<div className="posts-block">
 			<h2>Posts</h2>
+			<div className='container-posts'>
 			<ul>
 				{posts && posts.map((post) => {
 					const normalFormat = moment(post.publish_date, moment.defaultFormat).toDate();
@@ -41,7 +43,7 @@ const Posts = () => {
 							<div className="post-card">
 								<h2 className="post-title">{post.title}</h2>
 								<p className="post-author">{post.author}</p>
-								<img src={`http://localhost:3500/post-pictures/${post.image}`} height={40} width={40} alt='admin eblan'/>
+								{post.image && post.image !== 'undefined' ? <img src={`${route.serverURL}/post-pictures/${post.image}`} height={500} width={700} alt='admin eblan'/> : <></>}
 								<p className="post-body">{post.content}</p>
 								<p>{formatedDate}</p>
 							</div>
@@ -49,6 +51,7 @@ const Posts = () => {
 					);
 				})}
 			</ul>
+			</div>
 			<div>
 				<ul className="none inline">
 					<Pages totalPages={totalPages}/>

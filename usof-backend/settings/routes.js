@@ -20,6 +20,8 @@ module.exports = (app) => {
 
     app.route('/api/users/:user_id/:token').patch(isAuthorized.isAutorised, usersController.updateUserData);
 
+    app.route('/api/check-token/:token').get(usersController.checkToken);
+
     app.route('/api/users/:user_id/:token').delete(isAuthorized.isAutorised, usersController.deleteUser);
 
     //Auth module
@@ -29,7 +31,7 @@ module.exports = (app) => {
 
     app.route('/api/auth/login').post(authController.login);
 
-    app.route('/api/auth/logout/:token').post(isAuthorized.isAutorised, authController.logout);
+    app.route('/api/auth/logout/:token').post(authController.logout);
 
     app.route('/api/auth/password-reset').post(authController.passwordReset);
 

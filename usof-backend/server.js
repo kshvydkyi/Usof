@@ -20,6 +20,7 @@ app.use(passport.initialize());
 require('./middleware/passport')(passport)
 app.use('/avatars', express.static(`${__dirname}/assets/avatars`));
 app.use('/post-pictures', express.static(`${__dirname}/assets/picture-post`));
+app.use('/icon', express.static(`${__dirname}/assets/images`));
 
 
 const routes = require('./settings/routes');
