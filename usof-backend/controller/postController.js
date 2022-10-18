@@ -162,7 +162,8 @@ exports.getPostCategories = async (req, res) => {
     try{
         const categoriesId = await Post.getPostCategories(id);
         const categories = categoriesId.map((item) => Category.getCategoryById(item.category_id));
-        response.status(200, await Promise.all(categories), res);
+        const returnCategories = await Promise.all(categories);
+        response.status(200, {categories: returnCategories, postId: post[0].id}, res);
     }
     catch (e)
     {

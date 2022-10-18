@@ -16,7 +16,7 @@ class Category extends Model{
         return sql[0];
     }
     async getCategoryById(id){
-        const sql = await this.DB.query("SELECT title, description FROM categories WHERE id = '"+ id +"'");
+        const sql = await this.DB.query("SELECT id, title, description FROM categories WHERE id = '"+ id +"'");
         return sql[0].length === 0 ? false : sql[0];
     }
     async isCategoryExist(title){

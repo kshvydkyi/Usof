@@ -15,7 +15,7 @@ class Post extends Model {
         return sql[0];
     }
     async getPostById(id){
-        const sql = await this.DB.query("SELECT author_id, title, content, image, status, publish_date FROM posts WHERE id = '"+ id +"'");
+        const sql = await this.DB.query("SELECT id, author_id, title, content, image, status, publish_date FROM posts WHERE id = '"+ id +"'");
         return sql[0].length === 0 ? false : sql[0];
     }
     async addPostToCategory(categories, [{id}]){

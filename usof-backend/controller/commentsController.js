@@ -91,8 +91,9 @@ exports.getAllCommentsInPostUser = async (req, res) => {
             }
         )
         const promiseData = await Promise.all(data);
+        const returnData = await Promise.all(promiseData);
 
-        response.status(200, await Promise.all(promiseData), res);
+        response.status(200, {coments: returnData, postId: id}, res);
     }
     catch (e)
     {

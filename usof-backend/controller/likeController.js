@@ -61,7 +61,7 @@ exports.getAllLikesPost = async (req, res) => {
     }
     try{
         const likes = await Like.getLikesPost(postId);
-        response.status(200, {message: `Post with id - ${postId} have ${likes} likes`}, res);
+        response.status(200, {likes: likes, postId: postId}, res);
     }
     catch (e){
         response.status(500, {message: {e}}, res);

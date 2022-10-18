@@ -11,35 +11,41 @@ import {
     return response.data;
   });
   
-//   export const fetchPostCategory = createAsyncThunk(
-//     'posts/postCategories',
-//     async (id) => {
-//       const response = await axios.get(routes.categoriesPost(id));
-//       return response.data;
-//     }
-//   );
+  export const fetchPostCategory = createAsyncThunk(
+    'posts/postCategories',
+    async (id) => {
+      const response = await axios.get(`/api/posts/${id}/categories`);
+      // console.log(`caterories fetch post id:${id}`, response.data)
+      return response.data;
+    }
+  );
   
-//   export const fetchPostLike = createAsyncThunk('posts/postLike', async (id) => {
-//     const response = await axios.get(routes.likesPost(id));
-//     return response.data;
-//   });
+  export const fetchPostLike = createAsyncThunk('posts/postLike', async (id) => {
+    const response = await axios.get(`/api/posts/${id}/like`);
+    // console.log('likes', response.data);
+    return response.data;
+  });
   
-//   export const fetchPostComments = createAsyncThunk(
-//     'posts/postComments',
-//     async (id) => {
-//       const response = await axios.get(routes.commentsPost(id));
-//       return response.data;
-//     }
-//   );
+  export const fetchPostComments = createAsyncThunk(
+    'posts/postComments',
+    async (id) => {
+      const response = await axios.get(`/api/posts/${id}/comments`);
+      // console.log('coments', response.data);
+      return response.data;
+    }
+  );
   
   const postsAdapter = createEntityAdapter();
   
   const initialState = postsAdapter.getInitialState({
+    postCategories: {},
+    postLikes: {},
+    postComments: {},
     error: null,
     loading: true,
     countPages: null,
   });
-  
+  // console.log('initial state', initialState);
   const postsSlice = createSlice({
     name: 'posts',
     initialState,
@@ -60,21 +66,20 @@ import {
           state.loading = false;
           state.error = 'Error load post try later :(';
         })
-        // .addCase(fetchPostCategory.fulfilled, (state, { payload }) => {
-        //   state.postCategories[payload.postId] = payload.category;
-        // })
-        // .addCase(fetchPostLike.fulfilled, (state, { payload }) => {
-        //   state.postLikes[payload.postId] = {
-        //     countLike: payload.countLike,
-        //     likeInfo: payload.like,
-        //   };
-        // })
-        // .addCase(fetchPostComments.fulfilled, (state, { payload }) => {
-        //   state.postComments[payload.postId] = {
-        //     countComments: payload.countComments,
-        //     comments: payload.comments,
-        //   };
-        // });
+        .addCase(fetchPostCategory.fulfilled, (state, { payload }) => {
+          state.postCategories[payload.values.postId] = [...payload.values.categories];
+        })
+        .addCase(fetchPostLike.fulfilled, (state, { payload }) => {
+          // console.log('payload likes', payload);
+          state.postLikes[payload.values.postId] = [payload.values.likes];
+        })
+        .addCase(fetchPostComments.fulfilled, (state, { payload }) => {
+          // console.log('payload comments', payload);
+          state.postComments[payload.values.postId] = {
+            countComments: payload.values.coments.length,
+            comments: payload.values,
+          };
+        });
     },
   });
   
