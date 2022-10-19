@@ -12,7 +12,7 @@ module.exports = (app) => {
     //User module
     app.route('/api/users/:token').get(isAuthorized.isAutorised, usersController.getAllUsers);
 
-    app.route('/api/users/:user_id/:token').get(isAuthorized.isAutorised, usersController.getUserById);
+    app.route('/api/get-user/:user_id').get(usersController.getUserById);
 
     app.route('/api/users/:token').post(isAuthorized.isAutorised, usersController.addNewUser);
 

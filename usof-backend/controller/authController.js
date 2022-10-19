@@ -82,7 +82,7 @@ exports.login = async (req, res) => {
            role: userData[0].role
        }, config.jwt, {expiresIn: '30d'});
        await User.updateValues('tmp_token', token, userData[0].id)
-        response.status(200, {token: `${token}`,  role: userData[0].role}, res)
+        response.status(200, {token: `${token}`,  role: userData[0].role, userId: userData[0].id}, res)
    }
    else{
        response.status(422, {message: `Passwords do not match`}, res);

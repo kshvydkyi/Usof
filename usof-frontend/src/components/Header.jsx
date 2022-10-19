@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
+import route from '../api/route';
 import logo from '../assets/images/navbar/logo.png'
 import useAuth from '../hooks/useAuth';
 
@@ -22,8 +24,9 @@ const Header = () => {
     const { auth, setAuth } = useAuth();
     const navigate = useNavigate();
     const currentUser = JSON.parse(localStorage.getItem('autorized'));
+
+    const [userAvatar, setUserAvatar] = useState();
     useEffect(() => {
-        // setAuth(false)
         if (currentUser.currentUser !== 'guest') {
             if (auth) {
                 checkToken(currentUser.accessToken, setAuth);
@@ -49,6 +52,21 @@ const Header = () => {
             navigate('/500');
         }
     }
+
+    const getUserInfo = async () => {
+        try {
+            const response = await axios.get(`/api/get-user/${currentUser.userId}`);
+            console.log(response.data.values[0].photo);
+            setUserAvatar(response.data.values[0].photo);
+        }
+        catch (e) {
+            console.log(e)
+            navigate('/500');
+        }
+    }
+    useEffect(() => {
+        getUserInfo();
+    }, [])
     return (
         <div className="wrapper-navbar">
             <nav className="navbar">
@@ -57,10 +75,16 @@ const Header = () => {
                 <div className='nav-bar-auth'>
                     {auth.user ? (
                         <>
-                            
-                            <a className='header-user' href='/'>{currentUser.user}</a>
-                            <a className='header-user' href='/create-post'>Cтворити базу</a>
-                            <button className='header-user' onClick={logout}>Вийти</button>
+                            <div className='header-character'>
+                                <div className='header-person'>
+                                    <a className='header-user' href='/'>{currentUser.user}</a>
+                                    <img src={`${route.serverURL}/avatars/${userAvatar}`} className='header-avatar' alt='avatar' />
+                                </div>
+                                <div className='header-buttons'>
+                                    <a className='header-user' href='/create-post'>Cтворити базу</a>
+                                    <button className='header-user' onClick={logout}>Вийти</button>
+                                </div>
+                            </div>
                         </>
                     ) : (
                         <>

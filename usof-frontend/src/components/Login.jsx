@@ -44,8 +44,10 @@ const Login = () => {
             console.log(response?.data.status, response?.data?.values);
             const accessToken = response?.data?.values.token;
             const role = response?.data?.values.role;
-            setAuth({ user, accessToken, role});
-            localStorage.setItem('autorized', JSON.stringify({user, accessToken, role}))
+            const userId = response?.data?.values.userId;
+            console.log(userId);
+            setAuth({ user, accessToken, role, userId});
+            localStorage.setItem('autorized', JSON.stringify({user, accessToken, role, userId}))
             setUser('');
             setPwd('');
             setLoading(false);

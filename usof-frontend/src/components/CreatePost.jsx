@@ -14,16 +14,13 @@ const CreatePost = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [image, setImage] = useState('');
-   
+
     const [errMsg, setErrMsg] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
     const options = [];
     const setHidden = () => {
         setTimeout(() => setErrMsg(''), 5000);
     }
-
-   
- 
     const addImage = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -55,18 +52,46 @@ const CreatePost = () => {
         try {
             console.log(title, content, image, selectedValue);
             selectedValue.map((item) => {
-                categories.push({category: item})
+                categories.push({ category: item })
             })
-            console.log(categories);
-            const response = await axios.post(CREATE_POST + user.accessToken,
-                JSON.stringify({ title: title, content: content, image: image, category: categories[0].category, category1: categories[1].category}),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                });
+            console.log(categories[0].category.value);
+            //тут я трохи насрав у код, не зважайте уваги
+            switch (categories.length) {
+                case 1:
+                    const response = await axios.post(CREATE_POST + user.accessToken,
+                        JSON.stringify({ title: title, content: content, image: image, category: categories[0].category.value}),
+                        {
+                            headers: { 'Content-Type': 'application/json' },
+                            withCredentials: true
+                        });
+                        console.log(response);
+                        navigate('/posts/?page=1');
+                    break;
+                case 2:
+                    const response1 = await axios.post(CREATE_POST + user.accessToken,
+                    JSON.stringify({ title: title, content: content, image: image, category: categories[0].category.value, category1: categories[1].category.value}),
+                    {
+                        headers: { 'Content-Type': 'application/json' },
+                        withCredentials: true
+                    });
+                    console.log(response1);
+                    navigate('/posts/?page=1');
+                    break;
+                case 3:
+                    const response2 = await axios.post(CREATE_POST + user.accessToken,
+                        JSON.stringify({ title: title, content: content, image: image, category: categories[0].category.value, category1: categories[1].category.value, category2: categories[2].category.value}),
+                        {
+                            headers: { 'Content-Type': 'application/json' },
+                            withCredentials: true
+                        });
+                        console.log(response2);
+                        navigate('/posts/?page=1');
+                    break;
+                default:
+                    setErrMsg('Ви повинні обрати хоча б одну категорію');
+                    setHidden();
 
-            console.log(response);
-            // navigate('/posts/?page=1');
+            }
         }
         catch (err) {
             console.log(err)
@@ -79,123 +104,159 @@ const CreatePost = () => {
                 setHidden();
             }
             else {
-                setErrMsg('шось сталось')
+                setErrMsg('шось сталось, перелогіньтесь будь ласка')
                 setHidden();
             }
             errRef.current.focus();
         }
     }
-    
+
     const getCategories = async () => {
         try {
             const response = await axios.get(`/api/categories/${user.accessToken}`);
             response.data.values.map((item) => {
-                options.push({value: item.id, label: item.title});
+                options.push({ value: item.id, label: item.title });
             })
         }
         catch (err) {
             console.log(err);
         }
     }
-    // useEffect(() => {
-    //     getCategories();
-    // });
+    useEffect(() => {
+        getCategories();
+        console.log('options', options);
+    }, [options]);
 
-    // const [selectedValue, setSelectedValue] = useState([]);
+    const [selectedValue, setSelectedValue] = useState([]);
     // const handleChange = (e) => {
     //     setSelectedValue(Array.isArray(e) ? e.map(x => x.value) : []);
     //   }
-    // console.log('options', options);
+    
+ 
+    //трошки харкоду, куди ж без цього
+    // const data = [
+    //     {
+    //         value: 1,
+    //         label: "category1"
+    //     },
+    //     {
+    //         value: 2,
+    //         label: "category2"
+    //     },
+    //     {
+    //         value: 4,
+    //         label: "php dlya daunov"
+    //     },
+    //     {
+    //         value: 5,
+    //         label: "Admin Category1"
+    //     },
+    //     {
+    //         value: 6,
+    //         label: "Admin Category2"
+    //     }
+    // ];
+    // const [selectedValue, setSelectedValue] = useState([]);
+
+    // handle onChange event of the dropdown
+    // const handleChange = (e) => {
+    //     setSelectedValue(Array.isArray(e) ? e.map(x => x.value) : []);
+    // }
     const customStyles = {
-        option: (provided, state) => ({
-          ...provided,
-          color: 'rgb(249 115 22)',
-          backgroundColor: '#000',
-          borderTop: '.1px solid',
-          height: '100%',
-        }),
-        control: (base, state) => ({
-          ...base,
-          borderColor: 'rgb(254 215 170)',
-        }),
-        singleValue: (provided, state) => ({
-          ...provided,
-          color: 'white',
-        }),
-      };
-      const data = [
-        {
-          value: 1,
-          label: "category1"
-        },
-        {
-          value: 2,
-          label: "category2"
-        },
-        {
-          value: 4,
-          label: "php dlya daunov"
-        },
-        {
-          value: 5,
-          label: "Admin Category1"
-        },
-        {
-          value: 6,
-          label: "Admin Category2"
-        }
-      ];
-      const [selectedValue, setSelectedValue] = useState([]);
-
-  // handle onChange event of the dropdown
-  const handleChange = (e) => {
-    setSelectedValue(Array.isArray(e) ? e.map(x => x.value) : []);
-  }
-
+        control: (provided, state) => ({
+            ...provided,
+            backgroundColor: 'none',
+            boxShadow: state.isFocused ? `0 0 0 2px rgb(90, 20, 152), 0 0 #0000` : '',
+            transition: 'box-shadow 0.1s ease-in-out',
+          }),
+      
+          placeholder: (provided) => ({
+            ...provided,
+            color: '#9CA3AF',
+          }),
+      
+          input: (provided) => ({
+            ...provided,
+            color:  '#E5E7EB',
+          }),
+      
+          option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isFocused
+              ? 'rgb(90, 20, 152)'
+              : 'transparent',
+              backgroundColor: state.isOptionDisabled ?  'rgb(90, 20, 152)' : 'transparent',
+              transition: '0.3s',
+            color: '#E5E7EB',
+          }),
+          multiValue: (provided) => ({
+            ...provided,
+            backgroundColor: 'rgb(90, 20, 152)',
+            color: 'white'
+          }),
+          multiValueLabel: (provided) => ({
+            ...provided,
+            color: 'white'
+          }),
+          multiValueRemove: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isHover ? '': 'rgb(45, 45, 45)',
+            transition: '0.2s'
+          }),
+          menu: (provided) => ({
+            ...provided,
+            backgroundColor: 'rgb(45, 45, 45)',
+          }),
+    }
     return (
         <>
-        <div className="create-post">
-            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-            <h1>Тут створюється база</h1>
-            <div className='create-post-forms'>
-                <form onSubmit={createPost}>
-                    <label className="form_label" htmlFor="title">Заголовок</label>
-                    <input
-                        type="text"
-                        className="create-post-field"
-                        id="title"
-                        autoComplete="off"
-                        onChange={(e) => setTitle(e.target.value)}
-                        value={title}
-                        aria-describedby="titlenote"
-                        maxLength="40"
-                        required
-                    />
-                    <label className="form_label" htmlFor="content">Опис бази</label>
-                    <textarea
-                        id='content'
-                        className='create-post-content'
-                        autoComplete="off"
-                        rows='6'
-                        cols='60'
-                        onChange={(e) => setContent(e.target.value)}
-                        value={content}
-                        aria-describedby="contentnote"
-                        // wrap="off"
-                        required
-                    >
-                    </textarea>
-                    <label className="form_label" htmlFor="category">Категорія бази</label>
-                    <Select
-        className="dropdown"
-        placeholder="Select Option"
-        value={data.filter(obj => selectedValue.includes(obj.value))} // set selected values
-        options={data} // set list of the data
-        onChange={handleChange} // assign onChange function
-        isMulti
-        isClearable
-      />
-                    {/* <Select 
+            <div className="create-post">
+                <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                <h1>Тут створюється база</h1>
+                <div className='create-post-forms'>
+                    <form onSubmit={createPost}>
+                        <label className="form_label" htmlFor="title">Заголовок</label>
+                        <input
+                            type="text"
+                            className="create-post-field"
+                            id="title"
+                            autoComplete="off"
+                            onChange={(e) => setTitle(e.target.value)}
+                            value={title}
+                            aria-describedby="titlenote"
+                            maxLength="40"
+                            required
+                        />
+                        <label className="form_label" htmlFor="content">Опис бази</label>
+                        <textarea
+                            id='content'
+                            className='create-post-content'
+                            autoComplete="off"
+                            rows='6'
+                            cols='60'
+                            onChange={(e) => setContent(e.target.value)}
+                            value={content}
+                            aria-describedby="contentnote"
+                            // wrap="off"
+                            required
+                        >
+                        </textarea>
+                        <label className="form_label" htmlFor="category">Категорія бази</label>
+                        <Select
+                            styles={customStyles}
+                            placeholder="Виберіть категорії"
+                            // value={options.filter(obj => options.includes(obj.value))} 
+                            value={selectedValue}// set selected values
+                            options={options}
+                            isOptionDisabled={() => selectedValue.length >= 3} // set list of the data
+                            onChange={(option) => {
+                                console.log(option);
+                                setSelectedValue(option);
+                            }} // assign onChange function
+                            isMulti
+                            // isClearable
+                        />
+                        {/* <Select 
                         styles={customStyles}
                         id="category"
                        
@@ -207,9 +268,9 @@ const CreatePost = () => {
                          // assign onChange function
                         
                         /> */}
-                        {selectedValue && <div style={{ marginTop: 20, lineHeight: '25px' }}>
+                        {/* {selectedValue && <div style={{ marginTop: 20, lineHeight: '25px' }}>
                             <div><b>Selected Value: </b> {JSON.stringify(selectedValue, null, 2)}</div>
-                        </div>}
+                        </div>} */}
 
                         {/* <input
                         type="number"
@@ -226,20 +287,20 @@ const CreatePost = () => {
                     /> */}
 
 
-                    <button className="btn">Запостити базу</button>
-                </form>
-                <div className="select-image">
-                    <form onSubmit={addImage}>
-                        <input
-                        className="file-select"
-                            type="file"
-                            onChange={handleFileSelect} />
-                            {/* <input disabled={image ? true : false} type="submit" className="btn" value="Завантажити картинку" /> */}
-                            <button  className="button" disabled={selectedFile ? false : true}>Завантажити</button>
+                        <button className="btn">Запостити базу</button>
                     </form>
+                    <div className="select-image">
+                        <form onSubmit={addImage}>
+                            <input
+                                className="file-select"
+                                type="file"
+                                onChange={handleFileSelect} />
+                            {/* <input disabled={image ? true : false} type="submit" className="btn" value="Завантажити картинку" /> */}
+                            <button className="btn" disabled={selectedFile ? false : true}>Завантажити</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
         </>
     )
 }

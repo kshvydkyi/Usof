@@ -1,4 +1,5 @@
 import '../css/App.css';
+import '../css/index.scss'
 import Register from './Register';
 import { Routes, Route } from 'react-router-dom';
 import Login from './Login';

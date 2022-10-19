@@ -50,7 +50,7 @@ const Posts = () => {
 										<p className='post-publish-date'>{formatedDate}</p>
 									</div>
 									<div className="post-title-img">
-										{post.image && post.image !== 'undefined' ? <img src={`${route.serverURL}/post-pictures/${post.image}`} height={500} width={760} alt='admin eblan' /> : <></>}
+										{post.image && post.image !== 'undefined' ? <img src={`${route.serverURL}/post-pictures/${post.image}`} className="post-img"  alt='admin eblan' /> : <></>}
 									</div>
 									<div className='post-desc'>
 										<p className="post-content">{`${post.content}`}</p>
