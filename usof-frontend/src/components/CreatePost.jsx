@@ -24,9 +24,9 @@ const CreatePost = () => {
     const addImage = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        console.log(selectedFile);
+        // console.log(selectedFile);
         formData.append("image", selectedFile);
-        console.log(formData);
+        // console.log(formData);
         try {
             const response = await axios.post(`/api/posts/image/${user.accessToken}`, formData,
                 {
@@ -35,11 +35,12 @@ const CreatePost = () => {
                 }
 
             )
-            console.log(response);
+            // console.log(response);
             setImage(response.data.values.path);
         }
         catch (err) {
-            console.log(err?.response);
+            // console.log(err?.response);
+            setErrMsg('Не вдалося завантажити картинку')
         }
 
     }
@@ -50,11 +51,11 @@ const CreatePost = () => {
     const createPost = async (e) => {
         e.preventDefault();
         try {
-            console.log(title, content, image, selectedValue);
+            // console.log(title, content, image, selectedValue);
             selectedValue.map((item) => {
                 categories.push({ category: item })
             })
-            console.log(categories[0].category.value);
+            // console.log(categories[0].category.value);
             //тут я трохи насрав у код, не зважайте уваги
             switch (categories.length) {
                 case 1:
@@ -64,7 +65,7 @@ const CreatePost = () => {
                             headers: { 'Content-Type': 'application/json' },
                             withCredentials: true
                         });
-                        console.log(response);
+                        // console.log(response);
                         navigate('/posts/?page=1');
                     break;
                 case 2:
@@ -74,7 +75,7 @@ const CreatePost = () => {
                         headers: { 'Content-Type': 'application/json' },
                         withCredentials: true
                     });
-                    console.log(response1);
+                    // console.log(response1);
                     navigate('/posts/?page=1');
                     break;
                 case 3:
@@ -84,7 +85,7 @@ const CreatePost = () => {
                             headers: { 'Content-Type': 'application/json' },
                             withCredentials: true
                         });
-                        console.log(response2);
+                        // console.log(response2);
                         navigate('/posts/?page=1');
                     break;
                 default:
@@ -94,7 +95,7 @@ const CreatePost = () => {
             }
         }
         catch (err) {
-            console.log(err)
+            // console.log(err)
             if (!err?.response) {
                 setErrMsg('Сервер впав(')
                 setHidden();
@@ -119,12 +120,13 @@ const CreatePost = () => {
             })
         }
         catch (err) {
-            console.log(err);
+        //    console.log (err);
+            navigate('/500');
         }
     }
     useEffect(() => {
         getCategories();
-        console.log('options', options);
+        // console.log('options', options);
     }, [options]);
 
     const [selectedValue, setSelectedValue] = useState([]);
@@ -250,7 +252,7 @@ const CreatePost = () => {
                             options={options}
                             isOptionDisabled={() => selectedValue.length >= 3} // set list of the data
                             onChange={(option) => {
-                                console.log(option);
+                                // console.log(option);
                                 setSelectedValue(option);
                             }} // assign onChange function
                             isMulti

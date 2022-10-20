@@ -32,7 +32,7 @@ class Like extends Model{
     }
     async getLikesPost(postId){
         const sql = await this.DB.query("SELECT * FROM likes_post WHERE post_id = '"+postId+"'");
-        return sql[0].length;
+        return sql[0];
     }
     async getLikesComment(commentId){
         const sql = await this.DB.query("SELECT * FROM likes_comment WHERE comment_id = '"+commentId+"'");

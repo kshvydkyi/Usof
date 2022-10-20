@@ -21,7 +21,9 @@ exports.getActivePosts = async (req, res) =>{
              const date = new Date(item.publish_date);
             //  const publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
              const [{login}] = await User.getLogin(item.author_id);
+             const [{photo}] = await User.getUserPhoto(item.author_id);
              return {
+                 authorPhoto: photo,
                  author: login,
                  title: item.title,
                  content: item.content,

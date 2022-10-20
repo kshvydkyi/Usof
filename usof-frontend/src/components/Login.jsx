@@ -41,11 +41,11 @@ const Login = () => {
                     withCredentials: true
                 }
             );
-            console.log(response?.data.status, response?.data?.values);
+            // console.log(response?.data.status, response?.data?.values);
             const accessToken = response?.data?.values.token;
             const role = response?.data?.values.role;
             const userId = response?.data?.values.userId;
-            console.log(userId);
+            // console.log(userId);
             setAuth({ user, accessToken, role, userId});
             localStorage.setItem('autorized', JSON.stringify({user, accessToken, role, userId}))
             setUser('');

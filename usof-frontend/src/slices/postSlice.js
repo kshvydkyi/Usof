@@ -40,6 +40,7 @@ import {
   const initialState = postsAdapter.getInitialState({
     postCategories: {},
     postLikes: {},
+    likesInfo: {},
     postComments: {},
     error: null,
     loading: true,
@@ -71,7 +72,10 @@ import {
         })
         .addCase(fetchPostLike.fulfilled, (state, { payload }) => {
           // console.log('payload likes', payload);
-          state.postLikes[payload.values.postId] = [payload.values.likes];
+          // const post = +payload.values.postId;
+          // console.log(post);
+          state.postLikes[payload.values.postId] = payload.values.likes.length;
+          state.likesInfo[payload.values.postId] = payload.values.likes;
         })
         .addCase(fetchPostComments.fulfilled, (state, { payload }) => {
           // console.log('payload comments', payload);

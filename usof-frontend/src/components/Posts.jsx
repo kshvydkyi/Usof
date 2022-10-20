@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPostComments, fetchPostLike, fetchPostCategory, fetchPosts, selectors } from '../slices/postSlice';
+import { fetchPosts, selectors } from '../slices/postSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/uk';
@@ -31,7 +31,7 @@ const Posts = () => {
 		}
 		dispatch(fetchPosts(page[1]));
 	}, []);
-	// console.log('Post:', posts, 'categories', categories);
+	// console.log('Post:', posts);
 	// console.log('post categories', categories)
 	return (
 		<div className="posts-block">
@@ -40,17 +40,19 @@ const Posts = () => {
 					{posts && posts.map((post) => {
 						const normalFormat = moment(post.publish_date, moment.defaultFormat).toDate();
 						const formatedDate = moment(normalFormat).fromNow();
-						// dispatch(fetchPostCategory(post.id));
 						return (
 							<li className="none" key={post.id}>
 								<div className="post-card">
 									<div className='post-author-date-block'>
-										<a href='/' className="post-author">{post.author}</a>
+										<div className="post-author-info">
+											<img src={post.authorPhoto && post.authorPhoto !== 'undefined' ? `${route.serverURL}/avatars/${post.authorPhoto}` : <></>} className='header-avatar' alt={'author avatar'} />
+											<a href='/' className="post-author">{post.author}</a>
+										</div>
 										<p className="post-title">{post.title}</p>
 										<p className='post-publish-date'>{formatedDate}</p>
 									</div>
 									<div className="post-title-img">
-										{post.image && post.image !== 'undefined' ? <img src={`${route.serverURL}/post-pictures/${post.image}`} className="post-img"  alt='admin eblan' /> : <></>}
+										{post.image && post.image !== 'undefined' ? <img src={`${route.serverURL}/post-pictures/${post.image}`} className="post-img" alt='admin eblan' /> : <></>}
 									</div>
 									<div className='post-desc'>
 										<p className="post-content">{`${post.content}`}</p>

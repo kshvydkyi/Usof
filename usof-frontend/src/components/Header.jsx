@@ -42,7 +42,7 @@ const Header = () => {
         try {
 
             const response = await axios.post(LOGOUT + currentUser.accessToken);
-            console.log(response.data);
+            // console.log(response.data);
             localStorage.removeItem('autorized');
             setAuth(false);
             navigate('/');
@@ -56,17 +56,16 @@ const Header = () => {
     const getUserInfo = async () => {
         try {
             const response = await axios.get(`/api/get-user/${currentUser.userId}`);
-            console.log(response.data.values[0].photo);
             setUserAvatar(response.data.values[0].photo);
         }
         catch (e) {
-            console.log(e)
+            // console.log(e)
             navigate('/500');
         }
     }
     useEffect(() => {
         getUserInfo();
-    }, [])
+    }, []);
     return (
         <div className="wrapper-navbar">
             <nav className="navbar">
@@ -78,7 +77,7 @@ const Header = () => {
                             <div className='header-character'>
                                 <div className='header-person'>
                                     <a className='header-user' href='/'>{currentUser.user}</a>
-                                    <img src={`${route.serverURL}/avatars/${userAvatar}`} className='header-avatar' alt='avatar' />
+                                    <img src={userAvatar && userAvatar !== 'undefined' ? `${route.serverURL}/avatars/${userAvatar}` : <></>} className='header-avatar' alt='avatar' />
                                 </div>
                                 <div className='header-buttons'>
                                     <a className='header-user' href='/create-post'>Cтворити базу</a>

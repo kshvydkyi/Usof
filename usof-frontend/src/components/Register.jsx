@@ -83,7 +83,7 @@ const Register = () => {
                     withCredentials: true
                 }
             );
-            console.log(response?.data.status, response?.data.values.message);
+            // console.log(response?.data.status, response?.data.values.message);
             setSuccess(true);
             setLoading(false);
         }

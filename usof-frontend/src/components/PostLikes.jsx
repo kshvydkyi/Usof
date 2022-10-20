@@ -6,30 +6,81 @@ import likeActive from '../assets/images/likes/likeActivePicture.png'
 import likeInactiveWhite from '../assets/images/likes/likeInactiveWhite.png'
 import likeActiveWhite from '../assets/images/likes/likeActiveWhite.png'
 import randomInt from 'random-int';
+import { useState } from "react";
+import axios from "axios";
 const PostLikes = ({ postId }) => {
+    const [isLike, setIsLike] = useState(false);
+    const [countLikes, setCountLikes] = useState();
     const dispatch = useDispatch();
     const likes = useSelector((state) => state.posts.postLikes);
+    const likesInfo = useSelector((state) => state.posts.likesInfo);
+
+    const userInfo = JSON.parse(localStorage.getItem('autorized'));
     useEffect(() => {
         dispatch(fetchPostLike(postId));
-
     }, []);
-    // console.log(postId, likes)
+
+    useEffect(() => {
+        setCountLikes(likes[postId]);
+    }, [likes])
+    // console.log(countLikes);
+    useEffect(() => {
+        if (likesInfo[postId] !== undefined) {
+            likesInfo[postId].map((like) => {
+                if (like.author_id === userInfo.userId) {
+                    setIsLike(true);
+                }
+
+            })
+        }
+    }, [likesInfo[postId]])
+    const createDeleteLike = async () => {
+        try {
+            if (isLike) {
+                const deleteLike = await axios.delete(`/api/posts/${postId}/like/${userInfo.accessToken}`);
+                setIsLike(false);
+                if(countLikes > 1 || likes[postId] === 0){
+                    setCountLikes(likes[postId]);
+                }
+                else{
+                    setCountLikes(likes[postId] - 1);
+                }
+                
+                // console.log(deleteLike);
+            }
+            else {
+                const createLike = await axios.post(`/api/posts/${postId}/like/${userInfo.accessToken}`);
+                setIsLike(true);
+                if(countLikes > 0 || likes[postId] === 0)
+                {
+                    setCountLikes(likes[postId] + 1);
+                }
+                else{
+                    setCountLikes(likes[postId])
+                }
+                // console.log(createLike);
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
     return (
         <>
-        <ul className="none">
-            {likes && likes[postId] !== undefined && likes[postId].map((like) => {
-                return (
-                    <>
+            <ul className="none">
+                {likes && likes !== undefined ?
+
                     <li>
                         <div className="likes-block">
-                            <img className="img-like-com" src={likeInactiveWhite} alt='nolike' height={30} width={30}/> 
-                            <p>{like}</p>
-                            </div>
-                        </li>
-                    </>
-                )
+                            <button onClick={createDeleteLike} className="like-create-delete"><img className="img-like-com" src={isLike ? likeActiveWhite : likeInactiveWhite} alt='nolike' height={30} width={30} /></button>
+                            <p>{countLikes}</p>
+                        </div>
+                    </li>
 
-            })}
+
+
+                    : <></>}
+
             </ul>
         </>
     )

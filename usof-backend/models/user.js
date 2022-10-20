@@ -29,6 +29,10 @@ class User extends Model {
         const sql = await this.DB.query("SELECT login FROM users WHERE id = '"+ id +"'")
         return sql[0];
     }
+    async getUserPhoto(id){
+        const sql = await this.DB.query("SELECT photo FROM users WHERE id = '"+ id +"'")
+        return sql[0];
+    }
     async login(value){
         const sql = await this.DB.query("SELECT id, login, password, role FROM users WHERE login = '"+ value +"'");
         return sql[0];

@@ -313,9 +313,14 @@ li[class] {
     justify-content: space-between;
     border-bottom: 1px solid rgba(255, 255, 255, 0.279);
     margin-bottom: 10px;
+    align-items: center;
 }
 .post-author{
-    margin-right: 10px;    
+    margin-left: 10px;    
+}
+.post-author-info{
+    display: flex;
+    align-items: center;
 }
 .post-publish-date{
     font-weight: 100;
@@ -508,4 +513,18 @@ body::-webkit-scrollbar-thumb {
     font-size: 13px;
     padding: 5px;
     margin-right: 2px;
+}
+
+.like-create-delete{
+    margin: 0;
+    padding:0;
+    background: none;
+    border: none;
+}
+
+.like-create-delete:hover{
+    margin: 0;
+    padding:0;
+    background: none;
+    border: none;
 }
