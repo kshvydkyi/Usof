@@ -520,6 +520,7 @@ body::-webkit-scrollbar-thumb {
     padding:0;
     background: none;
     border: none;
+    transition: 0.3s;
 }
 
 .like-create-delete:hover{
@@ -527,4 +528,9 @@ body::-webkit-scrollbar-thumb {
     padding:0;
     background: none;
     border: none;
+}
+.user-page-userInfo{
+    display: flex;
+    background-color: #9b9b9b;
+    padding: 10px;
 }

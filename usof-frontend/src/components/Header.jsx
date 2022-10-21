@@ -56,16 +56,20 @@ const Header = () => {
     const getUserInfo = async () => {
         try {
             const response = await axios.get(`/api/get-user/${currentUser.userId}`);
+            // console.log('userAvatar', response);
             setUserAvatar(response.data.values[0].photo);
         }
         catch (e) {
-            // console.log(e)
+            console.log(e)
             navigate('/500');
         }
     }
     useEffect(() => {
-        getUserInfo();
+        if (currentUser.currentUser !== 'guest') {
+            getUserInfo();
+        }
     }, []);
+    // console.log(userAvatar);
     return (
         <div className="wrapper-navbar">
             <nav className="navbar">
@@ -76,11 +80,10 @@ const Header = () => {
                         <>
                             <div className='header-character'>
                                 <div className='header-person'>
-                                    <a className='header-user' href='/'>{currentUser.user}</a>
-                                    <img src={userAvatar && userAvatar !== 'undefined' ? `${route.serverURL}/avatars/${userAvatar}` : <></>} className='header-avatar' alt='avatar' />
+                                    <a className='header-user' href={`/user/${currentUser.userId}`}>{currentUser.user}</a>
+                                    <img src={userAvatar && userAvatar !== 'undefined' && userAvatar !== undefined ? `${route.serverURL}/avatars/${userAvatar}` : `${route.serverURL}/avatars/default_avatar.png`} className='header-avatar' alt='avatar' />
                                 </div>
                                 <div className='header-buttons'>
-                                    <a className='header-user' href='/create-post'>Cтворити базу</a>
                                     <button className='header-user' onClick={logout}>Вийти</button>
                                 </div>
                             </div>

@@ -23,14 +23,15 @@ exports.getActivePosts = async (req, res) =>{
              const [{login}] = await User.getLogin(item.author_id);
              const [{photo}] = await User.getUserPhoto(item.author_id);
              return {
-                 authorPhoto: photo,
-                 author: login,
                  title: item.title,
                  content: item.content,
                  image: item.image,
                  status: item.status,
                  publish_date: date,
-                 id: item.id
+                 id: item.id,
+                 authorId: item.author_id,
+                 author: login,
+                 authorPhoto: photo,
                 
              }
             }

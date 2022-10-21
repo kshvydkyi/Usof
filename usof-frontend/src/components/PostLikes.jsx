@@ -1,20 +1,23 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPostLike } from '../slices/postSlice';
-import likeInactive from '../assets/images/likes/likeInActivePicture.png'
-import likeActive from '../assets/images/likes/likeActivePicture.png'
+// import likeInactive from '../assets/images/likes/likeInActivePicture.png'
+// import likeActive from '../assets/images/likes/likeActivePicture.png'
 import likeInactiveWhite from '../assets/images/likes/likeInactiveWhite.png'
 import likeActiveWhite from '../assets/images/likes/likeActiveWhite.png'
-import randomInt from 'random-int';
+// import randomInt from 'random-int';
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+
 const PostLikes = ({ postId }) => {
     const [isLike, setIsLike] = useState(false);
     const [countLikes, setCountLikes] = useState();
     const dispatch = useDispatch();
     const likes = useSelector((state) => state.posts.postLikes);
     const likesInfo = useSelector((state) => state.posts.likesInfo);
-
+    const navigate = useNavigate();
     const userInfo = JSON.parse(localStorage.getItem('autorized'));
     useEffect(() => {
         dispatch(fetchPostLike(postId));
@@ -39,30 +42,18 @@ const PostLikes = ({ postId }) => {
             if (isLike) {
                 const deleteLike = await axios.delete(`/api/posts/${postId}/like/${userInfo.accessToken}`);
                 setIsLike(false);
-                if(countLikes > 1 || likes[postId] === 0){
-                    setCountLikes(likes[postId]);
-                }
-                else{
-                    setCountLikes(likes[postId] - 1);
-                }
-                
+                setCountLikes(countLikes - 1);
                 // console.log(deleteLike);
             }
             else {
                 const createLike = await axios.post(`/api/posts/${postId}/like/${userInfo.accessToken}`);
                 setIsLike(true);
-                if(countLikes > 0 || likes[postId] === 0)
-                {
-                    setCountLikes(likes[postId] + 1);
-                }
-                else{
-                    setCountLikes(likes[postId])
-                }
-                // console.log(createLike);
+                setCountLikes(countLikes + 1);
             }
         }
         catch (e) {
             console.log(e);
+            navigate('/500');
         }
     }
     return (

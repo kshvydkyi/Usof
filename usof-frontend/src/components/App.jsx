@@ -15,6 +15,7 @@ import User from './User';
 import RequreAuth from './RequireAuth';
 import Unauthorized from './Unauthorized';
 import CreatePost from './CreatePost';
+import ServerError from './ServerError';
 
 function App() {
 	if (!localStorage.getItem('autorized')) {
@@ -35,15 +36,16 @@ function App() {
 				<Route path='reset-password/:confirm_token' element={<ResetPasswordWT />} />
 				<Route path='unauthorized' element={<Unauthorized/>} />
 				<Route path='posts' element={<Posts />} />
+				<Route path='user/:userId' element={<User />} />
 				{/* only authorized users */}
 				<Route element={<RequreAuth allowedRoles={['User', 'Admin']}/>} >
-					<Route path='user' element={<User />} />
 					<Route path='create-post' element={<CreatePost />} />
 					</Route>
 				<Route element={<RequreAuth allowedRoles={['Admin']}/>} >
 					<Route path='admin' element={<Admin />} />
 				</Route>
 				<Route path="*" element={<NotFound />} />
+				<Route path='500' element={<ServerError />} />
 			</Route>
 		</Routes>
 	);

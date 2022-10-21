@@ -31,7 +31,7 @@ const Posts = () => {
 		}
 		dispatch(fetchPosts(page[1]));
 	}, []);
-	// console.log('Post:', posts);
+	console.log('Post:', posts);
 	// console.log('post categories', categories)
 	return (
 		<div className="posts-block">
@@ -46,7 +46,7 @@ const Posts = () => {
 									<div className='post-author-date-block'>
 										<div className="post-author-info">
 											<img src={post.authorPhoto && post.authorPhoto !== 'undefined' ? `${route.serverURL}/avatars/${post.authorPhoto}` : <></>} className='header-avatar' alt={'author avatar'} />
-											<a href='/' className="post-author">{post.author}</a>
+											<a href={`/user/${post.authorId}`} className="post-author">{post.author}</a>
 										</div>
 										<p className="post-title">{post.title}</p>
 										<p className='post-publish-date'>{formatedDate}</p>
