@@ -10,6 +10,12 @@ import {
     const response = await axios.get(`/api/posts/?page=${page}`);
     return response.data;
   });
+
+export const fetchPersonalPosts = createAsyncThunk('posts/personalPosts', async ({page=1, id}) => {
+    // console.log('fetch', page, id)
+    const response = await axios.get(`/api/posts/user/${id}?page=${page}`);
+    return response.data;
+})
   
   export const fetchPostCategory = createAsyncThunk(
     'posts/postCategories',
@@ -42,9 +48,11 @@ import {
     postLikes: {},
     likesInfo: {},
     postComments: {},
+    personalPosts: {},
     error: null,
     loading: true,
     countPages: null,
+    personalCountPages: null
   });
   // console.log('initial state', initialState);
   const postsSlice = createSlice({
@@ -58,6 +66,13 @@ import {
         .addCase(fetchPosts.pending, (state) => {
           state.loading = true;
         })
+     
+        // .addCase(fetchPostLike.pending, (state) => {
+        //   state.loading = true;
+        // })
+        // .addCase(fetchPosts.pending, (state) => {
+        //   state.loading = true;
+        // })
         .addCase(fetchPosts.fulfilled, (state, { payload }) => {
           state.loading = false;
           state.countPages = payload.values.meta.totalPages;
@@ -67,6 +82,24 @@ import {
           state.loading = false;
           state.error = 'Error load post try later :(';
         })
+        .addCase(fetchPersonalPosts.fulfilled, (state, {payload}) => {
+            // console.log('payload',payload);
+            state.personalCountPages = payload.values.meta.totalPages;
+            state.personalPosts = payload.values.data; 
+            state.loading = false;
+            
+        })
+        .addCase(fetchPersonalPosts.pending, (state, {payload}) => {
+          // console.log('payload',payload);
+          state.loading = true;
+          
+      })
+      .addCase(fetchPersonalPosts.rejected, (state, {payload}) => {
+        // console.log('payload',payload);
+        state.loading = false;
+        state.error = 'Error load post try later :(';
+        
+      })
         .addCase(fetchPostCategory.fulfilled, (state, { payload }) => {
           state.postCategories[payload.values.postId] = [...payload.values.categories];
         })

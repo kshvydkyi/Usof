@@ -50,13 +50,17 @@ exports.getActivePosts = async (req, res) =>{
     }
 }
 exports.getPersonalPosts = async (req, res) => {
-    const token = req.params.token;
-    const userData = jwt.verify(token, config.jwt);
+    const userId = req.params.id;
+    // const userData = jwt.verify(token, config.jwt);
+    const user = User.getUserById(userId);
+    if(!user){
+        return response.status(200, {message: `User with id = ${userId} not found`}, res);
+    }
     try{
         const { page } = req.query;
         const parsedPage = page ? Number(page) : 1;
         const perPage = 10;
-        const allPages = await Post.getPersonalPosts(userData.userId);
+        const allPages = await Post.getPersonalPosts(userId);
         const reversedPosts = allPages.reverse();
         // allPages.map(  ( item
 

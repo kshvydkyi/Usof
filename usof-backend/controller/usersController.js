@@ -77,11 +77,15 @@ exports.updateUserData = async (req, res) => {
     if(+id !== userData.userId){
         return response.status(403, {message:"Access denied"}, res)
     }
-    if(await User.isLoginExist(req.body.login)){
+    const [{login, email}] = await User.getUserById(userData.userId);
+    const isLogin = await User.isLoginExist(req.body.login);
+    const isEmail = await User.isEmailExist(req.body.email);
+    console.log(email, req.body.email)
+    if(isLogin && login !== req.body.login){
         return response.status(409, {message:`User with login - ${req.body.login} already exist`}, res);
 
     }
-    else if(await User.isEmailExist(req.body.email)){
+    else if(isEmail && email !== req.body.email){
         return response.status(409, {message:`User with email - ${req.body.email} already exist`}, res);
     }
     try{

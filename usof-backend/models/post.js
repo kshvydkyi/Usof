@@ -42,7 +42,7 @@ class Post extends Model {
 
     }
     async getPersonalPosts(id){
-        const sql = await this.DB.query("SELECT title, content, image, status, publish_date FROM posts WHERE author_id = '"+id+"'");
+        const sql = await this.DB.query("SELECT id, title, content, image, status, publish_date FROM posts WHERE author_id = '"+id+"'");
         return sql[0];
     }
 

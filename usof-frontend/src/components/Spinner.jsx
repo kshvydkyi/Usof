@@ -1,9 +1,7 @@
-import Spinner from 'react-bootstrap/Spinner';
-
-const SpinnerLoading = () => {
+const SpinnerLoading = ({style=''}) => {
   return (
     <>
-     <div className="lds-dual-ring"></div>
+     <div className={`${style?.style} lds-dual-ring` }></div>
     </>
   );
 }

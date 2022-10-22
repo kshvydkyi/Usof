@@ -42,7 +42,7 @@ module.exports = (app) => {
 
     app.route('/api/posts/:id').get(postController.getActivePostById);
 
-    app.route('/api/posts/user/:token').get(isAuthorized.isAutorised, postController.getPersonalPosts);
+    app.route('/api/posts/user/:id').get(postController.getPersonalPosts);
 
     app.route('/api/admin/posts/:token').get(isAuthorized.isAutorised, postController.getAllPosts);
 
