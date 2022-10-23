@@ -18,6 +18,7 @@ import CreatePost from './CreatePost';
 import ServerError from './ServerError';
 import ChangeProfile from './ChangeProfile';
 import ChangeUserAvatar from './ChangeUserAvatar';
+import Post from './Post';
 
 function App() {
 	if (!localStorage.getItem('autorized')) {
@@ -39,6 +40,7 @@ function App() {
 				<Route path='unauthorized' element={<Unauthorized/>} />
 				<Route path='posts' element={<Posts />} />
 				<Route path='user/:userId' element={<User />} />
+				<Route path='post/:postId' element={<Post/>} />
 				{/* only authorized users */}
 				<Route element={<RequreAuth allowedRoles={['User', 'Admin']}/>} >
 					<Route path='create-post' element={<CreatePost />} />

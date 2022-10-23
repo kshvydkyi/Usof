@@ -248,7 +248,26 @@ label{
     transition: 0.3s;
     color:rgb(142, 51, 222);
 }
-
+.logout-button{
+    padding: 0;
+    /* padding-bottom: 2px; */
+    /* padding-left: 3px;
+    padding-right: 3px; */
+    padding-top: 3px;
+    border-radius: 5px;
+    margin-left: 10px;
+    transition: 0.3s;
+    background: none;
+}
+.logout-img{
+    height: 35px;
+    width: 35px;
+}
+.header-user:hover{
+    background: none;
+    transition: 0.3s;
+    color:rgb(142, 51, 222);
+}
 .lds-dual-ring {
     display: inline-block;
     width: 18px;
@@ -569,4 +588,47 @@ body::-webkit-scrollbar-thumb {
 
 .change-prof{
     align-items: center;
+}
+
+.coment-card{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(128, 128, 128, 0.44);
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+.coment-author-date-block{
+    display: flex;
+}
+.coment-author-info{
+    display: flex;
+    align-items: center;
+}
+.coment-date{
+    margin-left: 10px;
+}
+.coment-avatar{
+    width: 35px;
+    height: 35px;
+}
+.coment-author{
+    font-size: 16px;
+    font-weight: 500;
+}
+.create-coment-textarea{
+    width: 79%;
+    padding: 5px;
+    
+}
+.create-coment-form{
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.add-coment-btn{
+    padding: 5px;
+    margin-left: 10px;
+    background: none;
 }

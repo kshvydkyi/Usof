@@ -130,8 +130,10 @@ exports.getActivePostById = async (req, res) =>{
     // const date = new Date(post[0].publish_date);
     // post[0].publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
     const [{login}] = await User.getLogin(post[0].author_id);
-    delete post[0].author_id;
+    const [{photo}] = await User.getUserPhoto(post[0].author_id)
+    // delete post[0].author_id;
     post[0].author = login;
+    post[0].authorImage = photo;
     if(!post){
         return response.status(404, {message: `Post with id = ${id} not found`}, res);
     }

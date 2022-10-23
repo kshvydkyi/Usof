@@ -5,7 +5,7 @@ import axios from '../api/axios';
 import route from '../api/route';
 import logo from '../assets/images/navbar/logo.png'
 import useAuth from '../hooks/useAuth';
-
+import LogoutSvg from '../assets/images/navbar/logout-icon.png'
 const LOGOUT = '/api/auth/logout/'
 const checkToken = async (token, setAuth) => {
     try {
@@ -84,7 +84,7 @@ const Header = () => {
                                     <img src={userAvatar && userAvatar !== 'undefined' && userAvatar !== undefined ? `${route.serverURL}/avatars/${userAvatar}` : `${route.serverURL}/avatars/default_avatar.png`} className='header-avatar' alt='avatar' />
                                 </div>
                                 <div className='header-buttons'>
-                                    <button className='header-user' onClick={logout}>Вийти</button>
+                                    <button className='logout-button' onClick={logout}><img src={LogoutSvg} className='logout-img' alt='logout'/></button>
                                 </div>
                             </div>
                         </>

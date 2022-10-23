@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts, selectors } from '../slices/postSlice';
+import { fetchPosts, getFetchStatus, selectors } from '../slices/postSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/uk';
@@ -8,6 +8,7 @@ import route from '../api/route';
 import PostCategories from "./PostCategory";
 import PostLikes from "./PostLikes";
 import PostComents from "./PostComents";
+import SpinnerLoading from "./Spinner";
 
 const Pages = ({ totalPages }) => {
 	let pages = [];
@@ -17,7 +18,7 @@ const Pages = ({ totalPages }) => {
 	return pages;
 }
 const Posts = () => {
-
+	const isLoading = useSelector(getFetchStatus);
 	const navigate = useNavigate();
 	const { search } = useLocation();
 	const page = search.split('=');
@@ -33,7 +34,7 @@ const Posts = () => {
 	}, []);
 	console.log('Post:', posts);
 	// console.log('post categories', categories)
-	return (
+	return isLoading ? <SpinnerLoading style={{style: 'page-loading'}}/> : (
 		<div className="posts-block">
 			<div className='container-posts'>
 				<ul>
@@ -48,7 +49,7 @@ const Posts = () => {
 											<img src={post.authorPhoto && post.authorPhoto !== 'undefined' ? `${route.serverURL}/avatars/${post.authorPhoto}` : <></>} className='header-avatar' alt={'author avatar'} />
 											<a href={`/user/${post.authorId}`} className="post-author">{post.author}</a>
 										</div>
-										<p className="post-title">{post.title}</p>
+										<a href={`/post/${post.id}`}>{post.title}</a>
 										<p className='post-publish-date'>{formatedDate}</p>
 									</div>
 									<div className="post-title-img">
@@ -60,7 +61,7 @@ const Posts = () => {
 									<div className="post-likes-comment-categories">
 										<div className="flex-likes-comments">
 											<PostLikes postId={post.id} />
-											<PostComents postId={post.id} />
+											<a href={`/post/${post.id}`}><PostComents postId={post.id} /></a>
 										</div>
 										<PostCategories postId={post.id} />
 									</div>

@@ -81,12 +81,15 @@ exports.getAllCommentsInPostUser = async (req, res) => {
                 const date = new Date(item[0].publish_date);
                 const publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
                 const [{login}] = await User.getLogin(item[0].author_id);
+                const [{photo}] = await User.getUserPhoto(item[0].author_id);
                 return {
                     author: login,
                     content: item[0].content,
                     post_id: item[0].post_id,
                     status: item[0].status,
-                    publish_date
+                    publish_date: date,
+                    authorId: item[0].author_id,
+                    authorImage: photo
                 }
             }
         )

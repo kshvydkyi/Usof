@@ -17,7 +17,7 @@ const PostCategories = ({ postId }) => {
                 {categories && categories[postId] !== undefined &&  categories[postId].map((category) => {
                     return (
                         <>
-                            <li className='each-category'key={category[0].id}>
+                            <li className='each-category'key={category[0].title}>
                                 <p>{category[0].title}</p>
                             </li>
                         </>
