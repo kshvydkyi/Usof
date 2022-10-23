@@ -40,6 +40,14 @@ export const fetchPersonalPosts = createAsyncThunk('posts/personalPosts', async 
       return response.data;
     }
   );
+  export const fetchPostCommentsLikes = createAsyncThunk(
+    'posts/postCommentsLikes',
+    async (id) => {
+      const response = await axios.get(`/api/comments/${id}/like`);
+      // console.log('comentsLikes', response.data);
+      return response.data;
+    }
+  );
   
   const postsAdapter = createEntityAdapter();
   
@@ -48,6 +56,8 @@ export const fetchPersonalPosts = createAsyncThunk('posts/personalPosts', async 
     postLikes: {},
     likesInfo: {},
     postComments: {},
+    postCommentsLikes: {},
+    postCommentsLikesInfo: {},
     personalPosts: {},
     error: null,
     loading: true,
@@ -66,13 +76,6 @@ export const fetchPersonalPosts = createAsyncThunk('posts/personalPosts', async 
         .addCase(fetchPosts.pending, (state) => {
           state.loading = true;
         })
-     
-        // .addCase(fetchPostLike.pending, (state) => {
-        //   state.loading = true;
-        // })
-        // .addCase(fetchPosts.pending, (state) => {
-        //   state.loading = true;
-        // })
         .addCase(fetchPosts.fulfilled, (state, { payload }) => {
           state.loading = false;
           state.countPages = payload.values.meta.totalPages;
@@ -109,6 +112,11 @@ export const fetchPersonalPosts = createAsyncThunk('posts/personalPosts', async 
           // console.log(post);
           state.postLikes[payload.values.postId] = payload.values.likes.length;
           state.likesInfo[payload.values.postId] = payload.values.likes;
+        })
+        .addCase(fetchPostCommentsLikes.fulfilled, (state, { payload }) => {
+          // console.log('payload likes coments', payload);
+          state.postCommentsLikes[payload.values.commentId] = payload.values.countLikes;
+          state.postCommentsLikesInfo[payload.values.commentId] = payload.values.likesInfo;
         })
         .addCase(fetchPostComments.fulfilled, (state, { payload }) => {
           // console.log('payload comments', payload);

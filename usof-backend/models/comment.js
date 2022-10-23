@@ -10,7 +10,7 @@ class Comment extends Model{
         return;
     }
     async getCommentById(id){
-        const sql = await this.DB.query("SELECT content, author_id, post_id, publish_date, status FROM comments WHERE id = '"+ id +"'");
+        const sql = await this.DB.query("SELECT id, content, author_id, post_id, publish_date, status FROM comments WHERE id = '"+ id +"'");
         return sql[0].length === 0 ? false : sql[0];
     }
     async getCommentsInPost(postId){

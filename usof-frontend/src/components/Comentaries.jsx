@@ -2,9 +2,11 @@ import moment from "moment";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import route from "../api/route";
 import { fetchPostComments } from "../slices/postSlice";
+import ComentsLikes from "./ComentsLike";
 
 
 const Comentaries = ({ postId }) => {
@@ -13,10 +15,11 @@ const Comentaries = ({ postId }) => {
     const dispatch = useDispatch();
     const comentaries = useSelector((state) => state.posts.postComments);
     const [addComent, setAddComent] = useState();
+    const navigate = useNavigate();
     useEffect(() => {
         dispatch(fetchPostComments(postId));
     }, []);
-    // console.log(comentaries[postId]?.comments.coments);
+    console.log(comentaries[postId]?.comments.coments);
     const createComent = async (e) => {
         e.preventDefault();
         try{
@@ -26,9 +29,11 @@ const Comentaries = ({ postId }) => {
                 withCredentials: true
             });
             console.log(response);
+            navigate(`/post/${postId}`);
         }
         catch(err){
             console.log(err);
+            navigate('/500')
         }
     }
     return (
@@ -67,7 +72,9 @@ const Comentaries = ({ postId }) => {
                                     </div>
                                     <div className='post-desc'>
 										<p className="post-content coment-author">{`${coment.content}`}</p>
+                                        
 									</div>
+                                    <ComentsLikes comentId={coment.id} />
                                 </div>
                             </li>
                         </>

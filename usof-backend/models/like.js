@@ -36,7 +36,7 @@ class Like extends Model{
     }
     async getLikesComment(commentId){
         const sql = await this.DB.query("SELECT * FROM likes_comment WHERE comment_id = '"+commentId+"'");
-        return sql[0].length;
+        return sql[0];
     }
     async deleteLikePost(postId, userId){
         const sql = await this.DB.query("DELETE FROM likes_post WHERE post_id = '"+postId+"' AND author_id = '"+userId+"'");

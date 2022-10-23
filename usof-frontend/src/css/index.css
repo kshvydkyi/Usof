@@ -632,3 +632,7 @@ body::-webkit-scrollbar-thumb {
     margin-left: 10px;
     background: none;
 }
+.coment-like{
+    width: 25px;
+    height: 25px;
+}

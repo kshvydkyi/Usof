@@ -73,7 +73,8 @@ exports.getAllCommentsInPostUser = async (req, res) => {
     }
     try{
         const commentsId = await Comment.getCommentsInPost(id);
-        const comments = commentsId.map((item) => Comment.getCommentById(item.id));
+        const reversedComents = commentsId.reverse();
+        const comments = reversedComents.map((item) => Comment.getCommentById(item.id));
         const promiseComments = await Promise.all(comments);
         const data = promiseComments.map(async( item
 
@@ -83,6 +84,7 @@ exports.getAllCommentsInPostUser = async (req, res) => {
                 const [{login}] = await User.getLogin(item[0].author_id);
                 const [{photo}] = await User.getUserPhoto(item[0].author_id);
                 return {
+                    id: item[0].id,
                     author: login,
                     content: item[0].content,
                     post_id: item[0].post_id,

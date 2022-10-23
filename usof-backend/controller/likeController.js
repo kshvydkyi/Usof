@@ -73,11 +73,11 @@ exports.getAllLikesComment = async (req, res) => {
     const commentId = req.params.id;
     const comment = await Comment.getCommentById(commentId)
     if(!comment) {
-        return response.status(404, {message: `Post with id - ${commentId} not found`}, res);
+        return response.status(404, {message: `coment with id - ${commentId} not found`}, res);
     }
     try{
         const likes = await Like.getLikesComment(commentId);
-        response.status(200, {message: `Post with id - ${commentId} have ${likes} likes`}, res);
+        response.status(200, {countLikes:likes.length, likesInfo: likes, commentId}, res);
     }
     catch (e){
         response.status(500, {message: {e}}, res);
@@ -91,17 +91,17 @@ exports.deleteLikePost = async (req, res) =>{
     const like = await Like.isPostLikeExist(id, userData.userId);
     const likeData = await Like.getLikePostById(id, userData.userId);
     if(!likeData){
-        return response.status(404, {message: `Like on post with id = ${id} does not exist`}, res);
+        return response.status(404, {message: `Like on coment with id = ${id} does not exist`}, res);
     }
     if(+likeData[0].author_id !== userData.userId){
         return response.status(403, {message:"Access denied"}, res)
     }
     if(!like){
-        return response.status(404, {message: `Like on post with id = ${id} does not exist`}, res);
+        return response.status(404, {message: `Like on coment with id = ${id} does not exist`}, res);
     }
     await Like.deleteLikePost(id, userData.userId);
     await User.minusRating(userData.userId);
-    response.status(200, {message: `Like on post with id = ${id} deleted`}, res);
+    response.status(200, {message: `Like on coment with id = ${id} deleted`}, res);
 }
 
 exports.deleteLikeComment = async (req, res) =>{
@@ -111,17 +111,17 @@ exports.deleteLikeComment = async (req, res) =>{
     const comment = await Like.isCommentLikeExist(id, userData.userId);
     const commentData = await Like.getLikeCommentById(id, userData.userId);
     if(!commentData){
-        return response.status(404, {message: `Like on post with id = ${id} does not exist`}, res);
+        return response.status(404, {message: `Like on coment with id = ${id} does not exist`}, res);
     }
     if(+commentData[0].author_id !== userData.userId){
         return response.status(403, {message:"Access denied"}, res)
     }
     if(!comment){
-        return response.status(404, {message: `Like on post with id = ${id} does not exist`}, res);
+        return response.status(404, {message: `Like on coment with id = ${id} does not exist`}, res);
     }
     await Like.deleteLikeComment(id, userData.userId);
     await User.minusRating(userData.userId);
-    response.status(200, {message: `Like on post with id = ${id} deleted`}, res);
+    response.status(200, {message: `Like on coment with id = ${id} deleted`}, res);
 }
 
 
