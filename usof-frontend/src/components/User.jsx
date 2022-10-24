@@ -11,11 +11,13 @@ import PostComents from "./PostComents";
 import PostLikes from "./PostLikes";
 import { getFetchStatus } from "../slices/postSlice";
 import SpinnerLoading from "./Spinner";
+import ReadMoreReact from 'read-more-react';
 
-const Pages = ({ totalPages }) => {
+
+const Pages = ({ totalPages, userId }) => {
 	let pages = [];
 	for (let i = 1; i <= totalPages; i++) {
-		pages.push(<li key={i}><a className='pages' href={`/posts/?page=${i}`}>{i}</a></li>)
+		pages.push(<li key={i}><a className='pages' href={`/user/${userId}?page=${i}`}>{i}</a></li>)
 	}
 	return pages;
 }
@@ -71,50 +73,59 @@ const User = () => {
 
     return isLoading ? <SpinnerLoading style={{style: 'page-loading'}}/> : (
         <>
+        <div className="user-page">
             <div className='user-page-userInfo'>
                 <a href="/change-avatar">
                     <img src={photo && photo !== 'undefined' ? `${route.serverURL}/avatars/${photo}` : <></>} alt='user' width={120} height={120} />
                     </a>
                 <div>
-                    <p>Юзернейм: {login}</p>
+                    <h1 className="user-page-login">{login}</h1>
                     <p>Ім'я: {fullName}</p>
                     <p>Емаіл: {email}</p>
                     <p>Роль: {role}</p>
                     <p>Рейтинг: {rating}</p>
                 </div>
-
-            </div>
-            {selfProfile ? <div className='header-buttons'>
+                {selfProfile ? <div className='header-buttons'>
                 <a className='header-user' href='/create-post'>Cтворити базу</a>
                 <a className="header-user" href='/change-profile'>Редагувати профіль</a>
             </div> : <></>}
+            </div>
+           
             <div className="posts-block">
-			<div className='container-posts'>
-				<ul>
+			<div className='container-posts-user-page'>
+				<ul className="posts-user-page">
 					{personalPosts && personalPosts.map((post) => {
 						const normalFormat = moment(post.publish_date, moment.defaultFormat).toDate();
 						const formatedDate = moment(normalFormat).fromNow();
 						return (
 							<li className="none" key={post.id}>
-								<div className="post-card">
+								<div className="user-page-post-block">
 									<div className='post-author-date-block'>
 										<div className="post-author-info">
 											{/* <img src={post.authorPhoto && post.authorPhoto !== 'undefined' ? `${route.serverURL}/avatars/${post.authorPhoto}` : <></>} className='header-avatar' alt={'author avatar'} /> */}
 											{/* <a href={`/user/${post.authorId}`} className="post-author">{post.author}</a> */}
 										</div>
-										<p className="post-title">{post.title}</p>
+										<a href={`/post/${post.id}`}><p className="post-title">{post.title}</p></a>
 										<p className='post-publish-date'>{formatedDate}</p>
 									</div>
 									<div className="post-title-img">
-										{post.image && post.image !== 'undefined' ? <img src={`${route.serverURL}/post-pictures/${post.image}`} className="post-img" alt='admin eblan' /> : <></>}
+										{post.image && post.image !== 'undefined' ? <img src={`${route.serverURL}/post-pictures/${post.image}`} className="post-img-user-page" alt='admin eblan' /> : <></>}
 									</div>
 									<div className='post-desc'>
-										<p className="post-content">{`${post.content}`}</p>
+                                    <p className="post-content">
+											<ReadMoreReact
+											text={post.content}
+											min={1}
+											ideal={50}
+											max={51}
+											readMoreText={<a href={`/post/${post.id}`} target={`_blank`}>..read more</a>}
+											/></p>
+										{/* <p className="post-content">{`${post.content}`}</p> */}
 									</div>
 									<div className="post-likes-comment-categories">
 										<div className="flex-likes-comments">
 											<PostLikes postId={post.id} />
-											<PostComents postId={post.id} />
+											<a href={`/post/${post.id}`}><PostComents postId={post.id} /></a>
 										</div>
 										<PostCategories postId={post.id} />
 									</div>
@@ -126,10 +137,11 @@ const User = () => {
 			</div>
 			<div>
 				<ul className="none inline">
-					<Pages totalPages={totalPages} />
+					<Pages totalPages={totalPages} userId={id[2]}/>
 				</ul>
 			</div>
 		</div>
+        </div>
         </>
     )
 }

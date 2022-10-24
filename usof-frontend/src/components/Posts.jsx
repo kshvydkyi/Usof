@@ -9,7 +9,7 @@ import PostCategories from "./PostCategory";
 import PostLikes from "./PostLikes";
 import PostComents from "./PostComents";
 import SpinnerLoading from "./Spinner";
-
+import ReadMoreReact from 'read-more-react';
 const Pages = ({ totalPages }) => {
 	let pages = [];
 	for (let i = 1; i <= totalPages; i++) {
@@ -34,7 +34,7 @@ const Posts = () => {
 	}, []);
 	console.log('Post:', posts);
 	// console.log('post categories', categories)
-	return isLoading ? <SpinnerLoading style={{style: 'page-loading'}}/> : (
+	return isLoading ? <SpinnerLoading style={{ style: 'page-loading' }} /> : (
 		<div className="posts-block">
 			<div className='container-posts'>
 				<ul>
@@ -56,6 +56,7 @@ const Posts = () => {
 										{post.image && post.image !== 'undefined' ? <img src={`${route.serverURL}/post-pictures/${post.image}`} className="post-img" alt='admin eblan' /> : <></>}
 									</div>
 									<div className='post-desc'>
+								
 										<p className="post-content">{`${post.content}`}</p>
 									</div>
 									<div className="post-likes-comment-categories">
