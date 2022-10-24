@@ -413,6 +413,9 @@ li[class] {
     padding: 10px;
     font-size: 16px;
 }
+.coment-like-block{
+    margin-left: 10px;
+}
 .posts-block>h2{
     text-align: center;
 }
@@ -629,6 +632,11 @@ body::-webkit-scrollbar-thumb {
 .coment-author-info{
     display: flex;
     align-items: center;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+.coment-delete-update{
+    display: flex;
 }
 .coment-date{
     margin-left: 10px;

@@ -70,6 +70,12 @@ export const fetchPersonalPosts = createAsyncThunk('posts/personalPosts', async 
     initialState,
     reducers: {
       addPost: postsAdapter.addOne,
+      updateComent(state, {payload}){
+        const oldData = state.postComments[payload.id];
+        state.postComments[payload.id] = {
+          ...oldData, ...payload.change
+        }
+      }
     },
     extraReducers: (builder) => {
       builder
@@ -128,7 +134,7 @@ export const fetchPersonalPosts = createAsyncThunk('posts/personalPosts', async 
     },
   });
   
-  export const { action } = postsSlice;
+  export const { actions } = postsSlice;
   
   export const selectors = postsAdapter.getSelectors((state) => state.posts);
   

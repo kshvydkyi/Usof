@@ -97,6 +97,7 @@ const User = () => {
 					{personalPosts && personalPosts.map((post) => {
 						const normalFormat = moment(post.publish_date, moment.defaultFormat).toDate();
 						const formatedDate = moment(normalFormat).fromNow();
+                        console.log(post.content.length)
 						return (
 							<li className="none" key={post.id}>
 								<div className="user-page-post-block">
@@ -112,15 +113,20 @@ const User = () => {
 										{post.image && post.image !== 'undefined' ? <img src={`${route.serverURL}/post-pictures/${post.image}`} className="post-img-user-page" alt='admin eblan' /> : <></>}
 									</div>
 									<div className='post-desc'>
-                                    <p className="post-content">
+                                    {/* <p className="post-content">
 											<ReadMoreReact
 											text={post.content}
 											min={1}
 											ideal={50}
 											max={51}
 											readMoreText={<a href={`/post/${post.id}`} target={`_blank`}>..read more</a>}
-											/></p>
-										{/* <p className="post-content">{`${post.content}`}</p> */}
+											/></p> */}
+										<p className="post-content">{post.content.length < 40 ? post.content 
+                                        : <>
+                                        {post.content.slice(0, 40)} 
+                                        <a href={`/post/${post.id}`} target={`_blank`}> ...</a>
+                                        </>}
+                                        </p>
 									</div>
 									<div className="post-likes-comment-categories">
 										<div className="flex-likes-comments">

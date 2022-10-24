@@ -19,6 +19,7 @@ import ServerError from './ServerError';
 import ChangeProfile from './ChangeProfile';
 import ChangeUserAvatar from './ChangeUserAvatar';
 import Post from './Post';
+import UpdateComent from './UpdateComent';
 
 function App() {
 	if (!localStorage.getItem('autorized')) {
@@ -46,6 +47,7 @@ function App() {
 					<Route path='create-post' element={<CreatePost />} />
 					<Route path='change-profile' element={<ChangeProfile />} />
 					<Route path='change-avatar' element={<ChangeUserAvatar/>}/>
+					<Route path='update-coment/:comentId' element={<UpdateComent/>} />
 					</Route>
 				<Route element={<RequreAuth allowedRoles={['Admin']}/>} >
 					<Route path='admin' element={<Admin />} />

@@ -63,8 +63,8 @@ const ComentsLikes = ({ comentId }) => {
                 {likes && likes !== undefined ?
 
                     <li>
-                        <div className="likes-block">
-                            <button onClick={createDeleteLike} className="like-create-delete "><img className="img-like-com coment-like" src={isLike ? likeActiveWhite : likeInactiveWhite} alt='nolike' height={30} width={30} /></button>
+                        <div className="likes-block coment-like-block">
+                            <button onClick={createDeleteLike} className="like-create-delete coment-like-button"><img className="img-like-com coment-like" src={isLike ? likeActiveWhite : likeInactiveWhite} alt='nolike' height={30} width={30} /></button>
                             <p>{countLikes}</p>
                         </div>
                     </li>
