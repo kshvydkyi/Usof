@@ -101,7 +101,8 @@ exports.deleteUser = async (req, res) => {
     const id = req.params.user_id;
     const token = req.params.token;
     const userData = jwt.verify(token, config.jwt);
-    if(+id !== userData.userId || userData.role !== 'Admin'){
+    console.log(+id, userData.userId);
+    if(+id !== userData.userId && userData.role !== 'Admin'){
         return response.status(403, {message:"Access denied"}, res)
     }
     const user = await User.getUserById(id);

@@ -7,6 +7,8 @@ import axios from "../api/axios";
 import route from "../api/route";
 import { actions, fetchPostComments } from "../slices/postSlice";
 import ComentsLikes from "./ComentsLike";
+import deleteIcon from '../assets/images/buttons/delete.png'
+import updateIcon from '../assets/images/buttons/updateIcon.png'
 
 
 const Comentaries = ({ postId }) => {
@@ -86,14 +88,18 @@ const Comentaries = ({ postId }) => {
                                             <img src={coment.authorImage && coment.authorImage !== 'undefined' ? `${route.serverURL}/avatars/${coment.authorImage}` : <></>} className='header-avatar coment-avatar' alt={'author avatar'} />
                                             <a href={`/user/${coment.authorId}`} className="post-author coment-author">{coment.author}</a>
                                             <p className='post-publish-date coment-date'>{formatedDate}</p>
+                                          
+
                                         </div>
+                                        <div>
+                                                {currentUser.userId === coment.authorId ? <>  <a href={`/update-coment/${coment.id}`}><img src={updateIcon} className="deleteBTN updateIcon" alt='delete post'/></a> <button className="noneBTN" onClick={() => deleteComent(coment.id)}><img src={deleteIcon} height={40} className="deleteBTN" alt='delete post'/></button></> : <></>}
+                                             </div>
                                     </div>
                                     <div className='post-desc'>
                                     <p className="post-content coment-author">{`${coment.content}`}</p>
                                     </div>
                                     <div className="coment-delete-update">
                                         <ComentsLikes comentId={coment.id} />
-                                        {currentUser.userId === coment.authorId ? <><button onClick={() => deleteComent(coment.id)}>delete</button> <a href={`/update-coment/${coment.id}`}>update</a></> : <></>}
                                     </div>
                                 </div>
                             </li>

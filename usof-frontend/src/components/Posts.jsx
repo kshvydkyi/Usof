@@ -37,7 +37,7 @@ const Posts = () => {
 	return isLoading ? <SpinnerLoading style={{ style: 'page-loading' }} /> : (
 		<div className="posts-block">
 			<div className='container-posts'>
-				<ul>
+				<ul className="ul-posts">
 					{posts && posts.map((post) => {
 						const normalFormat = moment(post.publish_date, moment.defaultFormat).toDate();
 						const formatedDate = moment(normalFormat).fromNow();
@@ -57,7 +57,11 @@ const Posts = () => {
 									</div>
 									<div className='post-desc'>
 								
-										<p className="post-content">{`${post.content}`}</p>
+										<p className="post-content">{post.content.length < 100 ? post.content 
+                                        : <>
+                                        {post.content.slice(0, 100)} 
+                                        <a href={`/post/${post.id}`} target={`_blank`}> ...</a>
+                                        </>}</p>
 									</div>
 									<div className="post-likes-comment-categories">
 										<div className="flex-likes-comments">

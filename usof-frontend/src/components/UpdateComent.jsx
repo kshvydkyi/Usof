@@ -25,7 +25,12 @@ const UpdateComent = () => {
         }
         catch (err) {
             console.log(err);
-            navigate('/500')
+            if(err?.response.data.status === 404){
+                navigate('/404');
+            }
+            else{
+                navigate('/500');
+            }
         }
     }
 
@@ -39,7 +44,12 @@ const UpdateComent = () => {
         }
         catch (e) {
             console.log(e)
-            navigate('/500');
+            if(e?.response.data.status === 404){
+                navigate('/404');
+            }
+            else{
+                navigate('/500');
+            }
         }
     }
     useEffect(() => {
@@ -47,7 +57,10 @@ const UpdateComent = () => {
     }, []);
     return (
         <>
+                    <div className="update-coment">
+                    <h1>Редагування коментаря</h1>
                     <form onSubmit={createComent} className="create-coment-form">
+                        <div className="update-coment-block">
                         <label htmlFor="change-coment"></label>
                         <textarea
                             type='text'
@@ -58,8 +71,10 @@ const UpdateComent = () => {
                             onChange={(e) => setUpdateComment(e.target.value)}
                             required
                         />
-                        <button className="btn add-coment-btn">Змінити коментар</button>
+                        <button className="btn add-coment-btn">Змінити</button>
+                        </div>
                     </form>
+                    </div>
         </>
     )
 }

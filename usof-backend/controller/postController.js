@@ -20,6 +20,7 @@ exports.getActivePosts = async (req, res) =>{
         )=> {
              const date = new Date(item.publish_date);
             //  const publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+
              const [{login}] = await User.getLogin(item.author_id);
              const [{photo}] = await User.getUserPhoto(item.author_id);
              return {
@@ -46,6 +47,7 @@ exports.getActivePosts = async (req, res) =>{
             data: usersFilter}, res);
     }
     catch (e){
+        console.log(e);
         response.status(400, {message: `${e}`}, res);
     }
 }
@@ -127,6 +129,9 @@ exports.getAllPosts = async (req, res) => {
 exports.getActivePostById = async (req, res) =>{
     let id = req.params.id;
     const post = await Post.getPostById(id);
+    if(!post){
+        return response.status(404, {message: `Post with id = ${id} not found`}, res);
+    }
     // const date = new Date(post[0].publish_date);
     // post[0].publish_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
     const [{login}] = await User.getLogin(post[0].author_id);
@@ -134,9 +139,7 @@ exports.getActivePostById = async (req, res) =>{
     // delete post[0].author_id;
     post[0].author = login;
     post[0].authorImage = photo;
-    if(!post){
-        return response.status(404, {message: `Post with id = ${id} not found`}, res);
-    }
+ 
     if(post[0].status === 'inactive'){
         return response.status(404, {message: `Post with id = ${id} is inactive`}, res);
     }

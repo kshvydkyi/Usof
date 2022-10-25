@@ -52,6 +52,7 @@ const Login = () => {
             setPwd('');
             setLoading(false);
             navigate(from, {replace: true});
+            document.location.reload();
         }
         catch (err) {
             setLoading(false);
