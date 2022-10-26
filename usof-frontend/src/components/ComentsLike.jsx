@@ -54,7 +54,13 @@ const ComentsLikes = ({ comentId }) => {
         }
         catch (e) {
             console.log(e);
-            navigate('/500');
+            if(e?.response.data.status === 401){
+                navigate('/login');
+            }
+            else{
+                navigate('/500');
+
+            }
         }
     }
     return (

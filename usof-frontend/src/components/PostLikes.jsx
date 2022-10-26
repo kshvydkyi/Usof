@@ -52,8 +52,14 @@ const PostLikes = ({ postId }) => {
             }
         }
         catch (e) {
-            console.log(e);
-            navigate('/500');
+            console.log(e?.response.data.status);
+            if(e?.response.data.status === 401){
+                navigate('/login');
+            }
+            else{
+                navigate('/500');
+
+            }
         }
     }
     return (

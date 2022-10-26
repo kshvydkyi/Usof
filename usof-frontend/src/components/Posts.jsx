@@ -10,6 +10,7 @@ import PostLikes from "./PostLikes";
 import PostComents from "./PostComents";
 import SpinnerLoading from "./Spinner";
 import ReadMoreReact from 'read-more-react';
+import Navbar from "./Navbar";
 const Pages = ({ totalPages }) => {
 	let pages = [];
 	for (let i = 1; i <= totalPages; i++) {
@@ -32,11 +33,13 @@ const Posts = () => {
 		}
 		dispatch(fetchPosts(page[1]));
 	}, []);
-	console.log('Post:', posts);
+	// console.log('Post:', posts);
 	// console.log('post categories', categories)
 	return isLoading ? <SpinnerLoading style={{ style: 'page-loading' }} /> : (
 		<div className="posts-block">
+		
 			<div className='container-posts'>
+			<Navbar />
 				<ul className="ul-posts">
 					{posts && posts.map((post) => {
 						const normalFormat = moment(post.publish_date, moment.defaultFormat).toDate();

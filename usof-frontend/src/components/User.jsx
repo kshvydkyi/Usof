@@ -120,10 +120,13 @@ const User = () => {
 
 
                         <div className="flex">
-                            <a className='absolute' onMouseOver={() => swtShowAa(true)} onMouseOut={() => swtShowAa(false)} href="/change-avatar">
-                                <span className={`change-profile-image ${showAa ? null : 'opacity0'}`}><img src={updateIcon} className="deleteBTN updateIcon change-profile-icon" alt='delete post' /></span>
+                            {selfProfile?  <a className='absolute' onMouseOver={() => swtShowAa(true)} onMouseOut={() => swtShowAa(false)} href="/change-avatar">
+                                {selfProfile ? <span className={`change-profile-image ${showAa ? null : 'opacity0'}`}><img src={updateIcon} className="deleteBTN updateIcon change-profile-icon" alt='delete post' /></span> : <></>}
                                 <img src={photo && photo !== 'undefined' ? `${route.serverURL}/avatars/${photo}` : <></>} alt='user' width={120} height={120} />
-                            </a>
+                            </a> : 
+                                <img src={photo && photo !== 'undefined' ? `${route.serverURL}/avatars/${photo}` : <></>} alt='user' width={120} height={120} />
+                            }
+                           
                             <div>
                                 <div className="flex flex1">
                                     <p className="full-name-profile">{fullName} </p>

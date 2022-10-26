@@ -66,7 +66,7 @@ module.exports = (app) => {
 
 
     //Categories module
-    app.route('/api/categories/:token').get(isAuthorized.isAutorised, categoriesController.getAllCategories)
+    app.route('/api/categories').get(categoriesController.getAllCategories)
 
     app.route('/api/categories/:id/:token').get(isAuthorized.isAutorised, categoriesController.getCategoryById)
 

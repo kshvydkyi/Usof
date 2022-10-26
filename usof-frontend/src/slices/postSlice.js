@@ -21,7 +21,7 @@ export const fetchPersonalPosts = createAsyncThunk('posts/personalPosts', async 
     'posts/postCategories',
     async (id) => {
       const response = await axios.get(`/api/posts/${id}/categories`);
-      console.log(`caterories fetch post id:${id}`, response.data)
+      // console.log(`caterories fetch post id:${id}`, response.data)
       return response.data;
     }
   );

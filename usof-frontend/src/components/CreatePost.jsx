@@ -114,7 +114,7 @@ const CreatePost = () => {
 
     const getCategories = async () => {
         try {
-            const response = await axios.get(`/api/categories/${user.accessToken}`);
+            const response = await axios.get(`/api/categories`);
             response.data.values.map((item) => {
                 options.push({ value: item.id, label: item.title });
             })
