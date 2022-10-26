@@ -21,7 +21,7 @@ import ChangeUserAvatar from './ChangeUserAvatar';
 import Post from './Post';
 import UpdateComent from './UpdateComent';
 import UpdatePost from './UpdatePost';
-import Navbar from './Navbar';
+import Categories from './Categories';
 import Category from './Category';
 
 function App() {
@@ -45,8 +45,8 @@ function App() {
 				<Route path='posts' element={<Posts />} />
 				<Route path='user/:userId' element={<User />} />
 				<Route path='post/:postId' element={<Post/>} />
-				<Route path='navbar' element={<Navbar/>} />
-				<Route path='category/:categoryId' element={<Category />} />
+				<Route path='categories' element={<Categories />} />
+				<Route path='category/:id' element={<Category/>} />
 				{/* only authorized users */}
 				<Route element={<RequreAuth allowedRoles={['User', 'Admin']}/>} >
 					<Route path='create-post' element={<CreatePost />} />

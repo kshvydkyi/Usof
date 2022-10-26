@@ -39,7 +39,7 @@ const Posts = () => {
 		<div className="posts-block">
 		
 			<div className='container-posts'>
-			<Navbar />
+			{/* <Navbar /> */}
 				<ul className="ul-posts">
 					{posts && posts.map((post) => {
 						const normalFormat = moment(post.publish_date, moment.defaultFormat).toDate();

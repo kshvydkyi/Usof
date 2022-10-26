@@ -117,8 +117,6 @@ const User = () => {
                         <p className="post-publish-date role">{role}</p>
                     </div>
                     <div className="flex">
-
-
                         <div className="flex">
                             {selfProfile?  <a className='absolute' onMouseOver={() => swtShowAa(true)} onMouseOut={() => swtShowAa(false)} href="/change-avatar">
                                 {selfProfile ? <span className={`change-profile-image ${showAa ? null : 'opacity0'}`}><img src={updateIcon} className="deleteBTN updateIcon change-profile-icon" alt='delete post' /></span> : <></>}

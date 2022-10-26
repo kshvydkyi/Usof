@@ -73,8 +73,15 @@ const Header = () => {
     return (
         <div className="wrapper-navbar">
             <nav className="navbar">
-                <a className="w-8" href='/'><img src={logo} alt='logo' height={40} /></a>
-                <a href='/posts/?page=1'>Базований</a>
+                <div className='site-name'>
+                    <a className="w-8" href='/'><img src={logo} alt='logo' height={40} /></a>
+                    <a href='/'>Базований</a>
+                </div>
+                <div className='pages-mavbar'>
+                    <a href='/categories'>Categories</a>
+                    <a href='/posts/?page=1'>Posts</a>
+                    <a href='/users'>Users</a>
+                    </div>
                 <div className='nav-bar-auth'>
                     {auth.user ? (
                         <>
@@ -84,7 +91,7 @@ const Header = () => {
                                     <img src={userAvatar && userAvatar !== 'undefined' && userAvatar !== undefined ? `${route.serverURL}/avatars/${userAvatar}` : `${route.serverURL}/avatars/default_avatar.png`} className='header-avatar' alt='avatar' />
                                 </div>
                                 <div className='header-buttons'>
-                                    <button className='logout-button' onClick={logout}><img src={LogoutSvg} className='logout-img' alt='logout'/></button>
+                                    <button className='logout-button' onClick={logout}><img src={LogoutSvg} className='logout-img' alt='logout' /></button>
                                 </div>
                             </div>
                         </>

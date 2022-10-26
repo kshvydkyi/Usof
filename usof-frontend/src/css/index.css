@@ -18,15 +18,26 @@ body {
     height: 100%;
     background-color: #2c2c2c;
 }
-
+.components{
+    display: flex;
+    width: 100%;
+}
+.nav-bar-cat{
+    width:min-content;
+}
+/* .nav-bar-auth {
+    margin-right: 20px;
+} */
+.main-block{
+    margin-right: 300px;
+}
 .App {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     height: 100%;
-    /* min-height: 100vh; */
-    /* padding: 1rem 0.5rem; */
+
 }
 
 section {
@@ -190,12 +201,26 @@ label{
     border-image: linear-gradient(to right, rgb(142, 51, 222), rgb(90, 20, 152));
     border-image-slice: 1;
 }
-
+.site-name{
+    display: flex;
+    align-items: center;
+}
+.site-name>a{
+  margin-left: 10px;
+}
+.pages-mavbar{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-left: 27px;
+}
 .navbar{
     height: 50px;
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    padding-left: 30px;
+    padding-right: 30px;
+    justify-content: space-between;
     align-items: center;
     position: fixed;
     background-color: rgba(62, 62, 62, 0.5);
@@ -352,7 +377,7 @@ li[class] {
     margin: 10px;
     padding: 10px;
     display: flex;
-    width: 800px;
+    width: 830px;
     flex-direction: column;
     border-radius: 15px;
 
@@ -464,7 +489,7 @@ li[class] {
     min-height: 40px;
     min-width: 40px;
     max-width: 760px;
-    max-height: 500px;
+    max-height: 460px;
 }
 
 .create-post{
@@ -547,7 +572,7 @@ body::-webkit-scrollbar-thumb {
 
 .container-posts{
     display:flex;
-    justify-content: flex-start;
+    justify-content: center;
 }
 .ul-posts{
     display: flex;
@@ -806,6 +831,15 @@ body::-webkit-scrollbar-thumb {
 }
 .navigation{ 
     padding: 10px;
-    margin: 10px;
-    margin-right: 30px;
+    width: 200px;
+}
+.category-page-title{
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid gray;
+    margin-bottom: 10px;
+}
+.see-posts-in-category{
+    display: flex;
+    justify-content: flex-end;
 }
