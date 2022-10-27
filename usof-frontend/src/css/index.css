@@ -212,7 +212,16 @@ label{
     display: flex;
     width: 100%;
     justify-content: space-around;
-    margin-left: 27px;
+    margin-left: 30px;
+}
+.users-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 15px;
+    min-width: 400px;
 }
 .navbar{
     height: 50px;
@@ -771,6 +780,7 @@ body::-webkit-scrollbar-thumb {
     padding: 10px;
     margin: 5px;
     border-radius: 15px;
+    min-width: 400px;
 }
 .user-page-login{
     font-size: 24px;
@@ -842,4 +852,7 @@ body::-webkit-scrollbar-thumb {
 .see-posts-in-category{
     display: flex;
     justify-content: flex-end;
+}
+.category-title{
+    text-align: center;
 }

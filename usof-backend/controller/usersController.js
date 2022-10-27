@@ -10,7 +10,16 @@ const config = require('./../config');
 exports.getAllUsers = async (req, res) => {
     try {
         const allUsers = await User.getAllUsers();
-        response.status(200, allUsers, res);
+        const { page } = req.query;
+        const parsedPage = page ? Number(page) : 1;
+        const perPage = 10;
+        const totalPages = Math.ceil(  allUsers.length / perPage);
+        const usersFilter =  allUsers.slice(
+            parsedPage * perPage - perPage,
+            parsedPage * perPage
+        );
+        response.status(200, {meta: { page: Number(page), perPage: Number(perPage), totalPages },
+        data: usersFilter}, res);
     }
     catch(e){
         response.status(400, {message: `${e}`}, res);

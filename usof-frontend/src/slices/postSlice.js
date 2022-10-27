@@ -12,13 +12,18 @@ export const fetchPosts = createAsyncThunk('posts/allPost', async (page = 1) => 
     return response.data;
 });
 
+export const fetchUsers = createAsyncThunk('posts/allUsers', async ({page = 1}) => {
+    const response = await axios.get(`/api/users?page=${page}`);
+    return response.data;
+});
+
 export const fetchPersonalPosts = createAsyncThunk('posts/personalPosts', async ({ page = 1, id }) => {
     // console.log('fetch', page, id)
     const response = await axios.get(`/api/posts/user/${id}?page=${page}`);
     return response.data;
 })
 export const fetchPostsInCategory = createAsyncThunk('post/postsInCategory', async ({ page = 1, id, token}) => {
-    const response = await axios.get(`/api/categories/${id}/posts/${token}`);
+    const response = await axios.get(`/api/categories/${id}/posts/${token}?page=${page}`);
     console.log(response);
     return response.data;
 })
@@ -66,6 +71,8 @@ const initialState = postsAdapter.getInitialState({
     personalPosts: {},
     postInCategory: {},
     postInCategoryPages: {},
+    allUsers: {}, 
+    allUsersPages: {},
     error: null,
     loading: true,
     countPages: null,
@@ -98,6 +105,19 @@ const postsSlice = createSlice({
                 state.loading = false;
                 state.error = 'Error load post try later :(';
             })
+            .addCase(fetchUsers.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(fetchUsers.fulfilled, (state, { payload }) => {
+                console.log(payload);
+                state.loading = false;
+                state.allUsersPages = payload.values.meta.totalPages;
+                state.allUsers = payload.values.data
+            })
+            .addCase(fetchUsers.rejected, (state) => {
+                state.loading = false;
+                state.error = 'Error load post try later :(';
+            })
             .addCase(fetchPersonalPosts.fulfilled, (state, { payload }) => {
                 // console.log('payload',payload);
                 state.personalCountPages = payload.values.meta.totalPages;
@@ -117,9 +137,9 @@ const postsSlice = createSlice({
 
             })
             .addCase(fetchPostsInCategory.fulfilled, (state, { payload }) => {
-                console.log('payload',payload);
-                // state.postInCategoryPages = payload.values.meta.totalPages;
-                state.postInCategory = payload.values.filterPosts;
+                // console.log('payload',payload);
+                state.postInCategoryPages = payload.values.meta.totalPages;
+                state.postInCategory = payload.values.data;
                 state.loading = false;
 
             })

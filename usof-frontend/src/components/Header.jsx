@@ -78,9 +78,9 @@ const Header = () => {
                     <a href='/'>Базований</a>
                 </div>
                 <div className='pages-mavbar'>
-                    <a href='/categories'>Categories</a>
-                    <a href='/posts/?page=1'>Posts</a>
-                    <a href='/users'>Users</a>
+                    <a href='/categories'>Категорії</a>
+                    <a href='/posts/?page=1'>Пости</a>
+                    <a href='/users'>Користувачі</a>
                     </div>
                 <div className='nav-bar-auth'>
                     {auth.user ? (

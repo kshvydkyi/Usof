@@ -42,7 +42,7 @@ class User extends Model {
         return sql[0];
     }
     async getAllUsers(){
-        const sql = await this.DB.query('SELECT users.login, users.full_name, users.photo, users.email, users.role, users.rating FROM `users`');
+        const sql = await this.DB.query('SELECT users.id, users.login, users.full_name, users.photo, users.email, users.role, users.rating FROM `users`');
         return sql[0];
     }
 

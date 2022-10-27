@@ -35,9 +35,39 @@ exports.getCategoryById = async (req, res) => {
      const isAdmin = await User.isAdmin(userData.userId);
      if(isAdmin){
          try{
+            const { page } = req.query;
+            const parsedPage = page ? Number(page) : 1;
+            const perPage = 10;
+
             const postsIDs = await Category.getPostsByCategoriesAdmin(id);
             const posts = postsIDs.map((item) => Post.getPostById(item.post_id));
-            response.status(200, await Promise.all(posts), res);
+            const userPosts = await Promise.all(posts);
+            const responsePosts = userPosts.map( async (item) => {   
+                const date = new Date(item[0].publish_date);
+                const [{login}] = await User.getLogin(item[0].author_id);
+                const [{photo}] = await User.getUserPhoto(item[0].author_id);
+                return {
+                    title: item[0].title,
+                    content: item[0].content,
+                    image: item[0].image,
+                    status: item[0].status,
+                    publish_date: date,
+                    id: item[0].id,
+                    authorId: item[0].author_id,
+                    author: login,
+                    authorPhoto: photo,
+                   
+                }
+                
+            })
+            const promisedPosts = await Promise.all(responsePosts);
+            const totalPages = Math.ceil(  promisedPosts.length / perPage);
+             const usersFilter =  promisedPosts.slice(
+                 parsedPage * perPage - perPage,
+                 parsedPage * perPage
+             );
+            response.status(200, {meta: { page: Number(page), perPage: Number(perPage), totalPages },
+            data: usersFilter}, res);
          }
          catch(e){
              response.status(500, {message: `${e}`}, res);
@@ -45,13 +75,44 @@ exports.getCategoryById = async (req, res) => {
      }
      else{
          try{
+            const { page } = req.query;
+            const parsedPage = page ? Number(page) : 1;
+            const perPage = 10;
              const postsIDs = await Category.getPostsByCategoriesAdmin(id);
              const posts = postsIDs.map((item) => Post.getPostById(item.post_id));
              const userPosts = await Promise.all(posts);
              const filterPosts = userPosts.filter(([item]) => item.status === 'active');
-             response.status(200, {filterPosts}, res);
+            //  console.log(filterPosts);
+            const responsePosts = filterPosts.map( async (item) => {   
+                const date = new Date(item[0].publish_date);
+                const [{login}] = await User.getLogin(item[0].author_id);
+                const [{photo}] = await User.getUserPhoto(item[0].author_id);
+                return {
+                    title: item[0].title,
+                    content: item[0].content,
+                    image: item[0].image,
+                    status: item[0].status,
+                    publish_date: date,
+                    id: item[0].id,
+                    authorId: item[0].author_id,
+                    author: login,
+                    authorPhoto: photo,
+                   
+                }
+                
+            })
+            const promisedPosts = await Promise.all(responsePosts);
+            // console.log(promisedPosts);
+             const totalPages = Math.ceil(  promisedPosts.length / perPage);
+             const usersFilter =  promisedPosts.slice(
+                 parsedPage * perPage - perPage,
+                 parsedPage * perPage
+             );
+             response.status(200, {meta: { page: Number(page), perPage: Number(perPage), totalPages },
+             data: usersFilter}, res);
          }
          catch (e){
+            console.log(e);
              response.status(500, {message: `${e}`}, res);
          }
      }

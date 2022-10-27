@@ -18,7 +18,7 @@ const PostCategories = ({ postId }) => {
                     return (
                         <>
                             <li className='each-category'key={category[0].title}>
-                                <p>{category[0].title}</p>
+                                <a href={`/category/${category[0].id}`}>{category[0].title}</a>
                             </li>
                         </>
                     )

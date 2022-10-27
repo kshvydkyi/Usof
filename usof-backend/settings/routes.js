@@ -10,7 +10,7 @@ module.exports = (app) => {
     const {uploadAvatar, uploadPost} = require('./../middleware/uploadAvatar');
     const isAuthorized = require('../middleware/isAuthorized');
     //User module
-    app.route('/api/users/:token').get(isAuthorized.isAutorised, usersController.getAllUsers);
+    app.route('/api/users').get(usersController.getAllUsers);
 
     app.route('/api/get-user/:user_id').get(usersController.getUserById);
 

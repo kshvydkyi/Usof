@@ -23,6 +23,7 @@ import UpdateComent from './UpdateComent';
 import UpdatePost from './UpdatePost';
 import Categories from './Categories';
 import Category from './Category';
+import Users from './Users';
 
 function App() {
 	if (!localStorage.getItem('autorized')) {
@@ -46,7 +47,7 @@ function App() {
 				<Route path='user/:userId' element={<User />} />
 				<Route path='post/:postId' element={<Post/>} />
 				<Route path='categories' element={<Categories />} />
-				<Route path='category/:id' element={<Category/>} />
+				<Route path='users' element={<Users/>} />
 				{/* only authorized users */}
 				<Route element={<RequreAuth allowedRoles={['User', 'Admin']}/>} >
 					<Route path='create-post' element={<CreatePost />} />
@@ -54,6 +55,7 @@ function App() {
 					<Route path='change-avatar' element={<ChangeUserAvatar/>}/>
 					<Route path='update-coment/:comentId' element={<UpdateComent/>} />
 					<Route path='update-post/:postId' element={<UpdatePost />} />
+					<Route path='category/:id' element={<Category/>} />
 					</Route>
 				<Route element={<RequreAuth allowedRoles={['Admin']}/>} >
 					<Route path='admin' element={<Admin />} />

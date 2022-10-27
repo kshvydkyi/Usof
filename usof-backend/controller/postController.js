@@ -205,15 +205,17 @@ exports.createNewPost = async (req, res) =>{
 exports.updatePostUser = async (req, res) => {
     const id = req.params.id;
     const token = req.params.token;
+    console.log(req.body);
     const userData = jwt.verify(token, config.jwt);
     const post = await Post.getPostById(id);
+    const isPostTitle = await Post.isPostWithSuchTitleExist(req.body.title)
     if(+post[0].author_id !== userData.userId){
         return response.status(403, {message:"Access denied"}, res)
     }
     if(!post){
         return response.status(409, {message:`Post with id - ${id} not found`}, res);
     }
-    else if(await Post.isPostWithSuchTitleExist(req.body.title)){
+    else if(isPostTitle && req.body.title !== post[0].title){
         return response.status(409, {message:`Post with title - ${req.body.title} already exist`}, res);
     }
     try{
@@ -261,7 +263,7 @@ exports.adminSetStatus = async (req,res) =>{
     }
 }
 exports.updateImage = async (req, res) => {
-    const pathFile = req.file.path.split('\\').join('/');
+    const pathFile = req.file.filename;
     const postId = req.params.id;
     const token = req.params.token;
     const userData = jwt.verify(token, config.jwt);
@@ -271,7 +273,7 @@ exports.updateImage = async (req, res) => {
     }
     try{
         await Post.updateImage(pathFile, postId);
-        response.status(200, {message:`Post image changed`}, res);
+        response.status(200, {message:`Post image changed`, path: pathFile}, res);
     }
     catch (e){
         response.status(500, {message: `${e}`}, res);
@@ -282,6 +284,9 @@ exports.updateCategoriesForPost = async (req, res) => {
     const {...categoriesId} = req.body;
     const userData = jwt.verify(token, config.jwt);
     const post = await Post.getPostById(id);
+    if(!categoriesId.length < 1){
+        return response.status(400, {message: `Set minimum 1 category`}, res);
+    }
     if (!post) {
         return response.status(404, {message: `Post with id = ${id} not found`}, res);
     }

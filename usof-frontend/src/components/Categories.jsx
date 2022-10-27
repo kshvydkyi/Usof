@@ -32,7 +32,7 @@ const Categories = () => {
                                     <p>{category.description}</p>
                                 </div>
                                 <div className="see-posts-in-category">
-                                    <a href={`/category/${category.id}`}>Передивитись пости</a>
+                                    <a href={`/category/${category.id}?page=1`}>Передивитись пости</a>
                                 </div>
                             </div>
                         </li>
