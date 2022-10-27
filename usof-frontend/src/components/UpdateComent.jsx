@@ -15,16 +15,16 @@ const UpdateComent = () => {
     const createComent = async (e) => {
         e.preventDefault();
         try {
-            console.log(updateComment);
+            // console.log(updateComment);
             const response = await axios.patch(`/api/comments/${id[2]}/${currentUser.accessToken}`, JSON.stringify({ content: updateComment }), {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true
             });
-            console.log(response);
+            // console.log(response);
             navigate(`/post/${postId}`);
         }
         catch (err) {
-            console.log(err);
+            // console.log(err);
             if(err?.response.data.status === 404){
                 navigate('/404');
             }
@@ -37,13 +37,13 @@ const UpdateComent = () => {
     const getUserInfo = async () => {
         try {
             const response = await axios.get(`/api/comments/${id[2]}`);
-            console.log(response.data.values.comment[0].content);
-            console.log(response);
+            // console.log(response.data.values.comment[0].content);
+            // console.log(response);
             setUpdateComment(response.data.values.comment[0].content);
             setPostId(response.data.values.comment[0].post_id);
         }
         catch (e) {
-            console.log(e)
+            // console.log(e)
             if(e?.response.data.status === 404){
                 navigate('/404');
             }

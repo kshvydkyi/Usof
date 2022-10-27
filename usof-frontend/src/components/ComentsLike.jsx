@@ -53,7 +53,7 @@ const ComentsLikes = ({ comentId }) => {
             }
         }
         catch (e) {
-            console.log(e);
+            // console.log(e);
             if(e?.response.data.status === 401){
                 navigate('/login');
             }

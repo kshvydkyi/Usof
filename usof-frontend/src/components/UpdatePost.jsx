@@ -22,7 +22,7 @@ const UpdatePost = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const options = [];
     const postCategories = useSelector((state) => state.posts.postCategories);
-    // console.log('afdadsa',postCategories)
+    // //console.log('afdadsa',postCategories)
     const dispatch = useDispatch();
     const setHidden = () => {
         setTimeout(() => setErrMsg(''), 5000);
@@ -34,7 +34,7 @@ const UpdatePost = () => {
             setContent(response.data.values.post[0].content);
         }
         catch(e){
-            console.log(e);
+            //console.log(e);
             if(e?.response.status === 404){
                 navigate('/404')
             }
@@ -43,8 +43,8 @@ const UpdatePost = () => {
             }
         }
     }
-    // console.log(options)
-    // console.log(postCategories)
+    // //console.log(options)
+    // //console.log(postCategories)
     useEffect(() => {
         getPostInfo();
         dispatch(fetchPostCategory(id[2]))
@@ -54,9 +54,9 @@ const UpdatePost = () => {
     const updateImage = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        // console.log(selectedFile);
+        // //console.log(selectedFile);
         formData.append("image", selectedFile);
-        // console.log(formData);
+        // //console.log(formData);
         try {
             const response = await axios.patch(`/api/posts/update/image/${id[2]}/${user.accessToken}`, formData,
                 {
@@ -65,11 +65,11 @@ const UpdatePost = () => {
                 }
 
             )
-            console.log(response.data.values.path);
+            //console.log(response.data.values.path);
             setImage(response.data.values.path);
         }
         catch (err) {
-            console.log(err?.response);
+            //console.log(err?.response);
             setErrMsg('Не вдалося завантажити картинку')
         }
 
@@ -81,24 +81,24 @@ const UpdatePost = () => {
     const updatePost = async (e) => {
         e.preventDefault();
         try {
-            console.log(title, content, image, selectedValue);
+            //console.log(title, content, image, selectedValue);
             selectedValue.map((item) => {
                 categories[item.label] = item.value;
             })
-            console.log(categories);
+            ////console.log(categories);
             const updateTitleDesc = await axios.patch(`/api/posts/${id[2]}/${user.accessToken}`, JSON.stringify({title: title, content: content, image: image}), {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true
             })
-            console.log(updateTitleDesc);
+            //console.log(updateTitleDesc);
             const updateCategories = await axios.patch(`/api/posts/update-category/${id[2]}/${user.accessToken}`, JSON.stringify(categories),
             {headers: { 'Content-Type': 'application/json' },
             withCredentials: true})
-            console.log(updateCategories);
-            // console.log(categories[0].category.value);
+            //console.log(updateCategories);
+            // //console.log(categories[0].category.value);
         }
         catch (err) {
-            // console.log(err)
+            // //console.log(err)
             if (!err?.response) {
                 setErrMsg('Сервер впав(')
                 setHidden();
@@ -123,30 +123,30 @@ const UpdatePost = () => {
             })
             const filterCategories = Object.values(postCategories)[0]?.map(
                 (item) => {
-                    // console.log(item[0].id);
+                    // //console.log(item[0].id);
                     // // setTestState((prefState) => 
                     //     [prefState,  options[item[0].id]]
                     // )
-                    // console.log(testState);
+                    // //console.log(testState);
                     const searchOption = options.find(i => i.value === item[0].id)
                     return searchOption;
                 }
                 
               );
-            //   console.log(filterCategories);
+            //   //console.log(filterCategories);
               if(10 > kostyl){
                 setSelectedValue(filterCategories);
                 setKostyl(kostyl + 1);
               }
         }
         catch (err) {
-        //    console.log (err);
+        //    //console.log (err);
             navigate('/500');
         }
     }
     useEffect(() => {
         getCategories();
-        // console.log('options', options);
+        // //console.log('options', options);
     }, [options]);
  
     const customStyles = {
@@ -238,7 +238,7 @@ const UpdatePost = () => {
                             options={options}
                             isOptionDisabled={() => selectedValue.length >= 3} // set list of the data
                             onChange={(option) => {
-                                // console.log(option);
+                                // //console.log(option);
                                 setSelectedValue(option);
                             }} // assign onChange function
                             isMulti

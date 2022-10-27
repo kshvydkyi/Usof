@@ -8,11 +8,11 @@ const Navbar = () => {
     const getCategories = async () => {
         try{
             const response = await axios.get('/api/categories');
-            console.log(response.data.values);
+            // console.log(response.data.values);
             setCategories(response.data.values);
         }
         catch(e){
-            console.log(e)
+            // console.log(e)
         }
     }
     useEffect(() => {

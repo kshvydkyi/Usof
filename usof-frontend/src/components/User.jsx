@@ -41,20 +41,20 @@ const User = () => {
 
     const { search, pathname } = useLocation();
     // const id = search.split('/');
-    // console.log(pathname);
+    // //console.log(pathname);
     const id = pathname.split('/');
     const page = search.split('=');
-    // console.log(id[2])
+    // //console.log(id[2])
     const personalPosts = useSelector(state => state.posts.personalPosts)
 
     useEffect(() => {
         dispatch(fetchPersonalPosts({ page: page[1], id: id[2] }))
     }, []);
-    // console.log(personalPosts);
+    // //console.log(personalPosts);
     const getUserInfo = async () => {
         try {
             const response = await axios.get(`/api/get-user/${id[2]}`);
-            // console.log(response.data.values[0]);
+            // //console.log(response.data.values[0]);
             setSelfProfile(currentUser.userId === +id[2] ? true : false)
             setLogin(response.data.values[0].login);
             setFullName(response.data.values[0].full_name);
@@ -65,7 +65,7 @@ const User = () => {
 
         }
         catch (e) {
-            console.log(e)
+            //console.log(e)
             if (e?.response.data.status === 404) {
                 navigate('/404');
             }
@@ -81,11 +81,11 @@ const User = () => {
     const deletePost = async (postId) => {
         try {
             const response = await axios.delete(`/api/posts/${postId}/${currentUser.accessToken}`);
-            console.log(response);
+            //console.log(response);
             document.location.reload();
         }
         catch (e) {
-            console.log(e);
+            //console.log(e);
             if (e?.response.data.status === 404) {
                 navigate('/404');
             }
@@ -98,13 +98,13 @@ const User = () => {
     // const deleteProfile = async () => {
     //     try{
     //         const response = await axios.delete(`/api/users/${currentUser.userId}/${currentUser.accessToken}`);
-    //         console.log(response);
+    //         //console.log(response);
     //         localStorage.removeItem('autorized');
     //         navigate('/');
     //         document.location.reload();
     //     }
     //     catch (e){
-    //         console.log(e);
+    //         //console.log(e);
     //         navigate('/500')
     //     }
     // }
@@ -152,7 +152,7 @@ const User = () => {
                             {personalPosts && personalPosts.map((post) => {
                                 const normalFormat = moment(post.publish_date, moment.defaultFormat).toDate();
                                 const formatedDate = moment(normalFormat).fromNow();
-                                // console.log(post.content.length)
+                                // //console.log(post.content.length)
                                 return (
                                     <li className="none" key={post.id}>
                                         <div className="user-page-post-block">

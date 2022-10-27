@@ -27,33 +27,33 @@ const Comentaries = ({ postId }) => {
     useEffect(() => {
 
     }, [comentaries])
-    console.log(comentaries[postId]?.comments.coments);
+    // console.log(comentaries[postId]?.comments.coments);
     const createComent = async (e) => {
         e.preventDefault();
         try {
-            console.log(addComent);
+            // console.log(addComent);
             const response = await axios.post(`/api/posts/${postId}/comments/${currentUser.accessToken}`, JSON.stringify({ content: addComent }), {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true
             });
-            console.log(response);
+            // console.log(response);
             document.location.reload();
             window.scrollTo(0, 700);
         }
         catch (err) {
-            console.log(err);
+            // console.log(err);
             navigate('/500')
         }
     }
     const deleteComent = async (id) => {
         try{
             const response = await axios.delete(`/api/comments/${id}/${currentUser.accessToken}`);
-            console.log(response);
+            // console.log(response);
             document.location.reload();
             window.scrollTo(0, 700);
         }
         catch (e){
-            console.log(e);
+            navigate('/500')
         }
     }
     return (

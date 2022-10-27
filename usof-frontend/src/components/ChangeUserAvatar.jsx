@@ -33,7 +33,7 @@ const ChangeUserAvatar = () => {
             navigate('/posts/?page=1');
         }
         catch (err) {
-            console.log(err);
+            // console.log(err);
             setErrMsg('Не вдалося завантажити картинку')
         }
 

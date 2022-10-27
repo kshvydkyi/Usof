@@ -23,7 +23,7 @@ const Users = () => {
 
     const users = useSelector((state) => state.posts.allUsers)
     const totalPages = useSelector((state) => state.posts.allUsersPages);
-    console.log(users);
+    //console.log(users);
     useEffect(() => {
         dispatch(fetchUsers({page: page[1]}))    
     }, [])

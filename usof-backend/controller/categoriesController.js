@@ -112,7 +112,7 @@ exports.getCategoryById = async (req, res) => {
              data: usersFilter}, res);
          }
          catch (e){
-            console.log(e);
+            // console.log(e);
              response.status(500, {message: `${e}`}, res);
          }
      }

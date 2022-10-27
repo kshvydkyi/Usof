@@ -56,7 +56,7 @@ const ChangeProfile = () => {
                 withCredentials: true
             })
             localStorage.setItem('autorized', JSON.stringify({accessToken: user.accessToken, role: user.role, user: changedLogin, userId: user.userId}))
-            console.log(response);
+            // console.log(response);
             setLoading(false);
             navigate(-1);
         }

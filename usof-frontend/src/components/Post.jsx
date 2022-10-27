@@ -35,7 +35,7 @@ const Post = () => {
         try {
             const response = await axios.get(`/api/posts/${id[2]}`)
             // console.log(response.data.values.post[0]);
-            console.log(response.data.values.post[0].id)
+            // console.log(response.data.values.post[0].id)
             setAuthorId(response.data.values.post[0].author_id);
             setAuthor(response.data.values.post[0].author);
             setAuthorImage(response.data.values.post[0].authorImage);
@@ -54,8 +54,8 @@ const Post = () => {
 
         }
         catch (e) {
-            console.log(e);
-            // navigate('/404');
+            // console.log(e);
+            navigate('/404');
         }
     }
     useEffect(() => {

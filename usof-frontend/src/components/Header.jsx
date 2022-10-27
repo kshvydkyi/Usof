@@ -10,10 +10,10 @@ const LOGOUT = '/api/auth/logout/'
 const checkToken = async (token, setAuth) => {
     try {
         const response = await axios.get(`/api/check-token/${token}`);
-        console.log(response.data.status, response.data.values.message);
+        // console.log(response.data.status, response.data.values.message);
     }
     catch (e) {
-        console.log(e);
+        // console.log(e);
         if (e?.response.data.status === 401) {
             setAuth(false);
         }
@@ -60,7 +60,7 @@ const Header = () => {
             setUserAvatar(response.data.values[0].photo);
         }
         catch (e) {
-            console.log(e)
+            // console.log(e)
             navigate('/500');
         }
     }

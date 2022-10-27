@@ -52,7 +52,7 @@ const PostLikes = ({ postId }) => {
             }
         }
         catch (e) {
-            console.log(e?.response.data.status);
+            // console.log(e?.response.data.status);
             if(e?.response.data.status === 401){
                 navigate('/login');
             }

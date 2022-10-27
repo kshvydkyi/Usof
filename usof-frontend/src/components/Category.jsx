@@ -2,7 +2,7 @@ import moment from "moment";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../api/axios";
 import route from "../api/route";
 import { fetchPostCategory, fetchPostsInCategory, getFetchStatus } from "../slices/postSlice";
@@ -27,20 +27,21 @@ const Category = () => {
     const page = search.split('=');
     const [categoryTitle, setCategoryTitle] = useState();
     const [categoryDesc, setCategoryDesc] = useState();
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const categoryPosts = useSelector(state => state.posts.postInCategory)
     const totalPages = useSelector(state => state.posts.postInCategoryPages)
-    console.log(categoryPosts);
+    // console.log(categoryPosts);
     const getCategoryInfo = async () => {
         try {
             const response = await axios.get(`/api/categories/${id[2]}`)
-            console.log(response.data.values[0].title);
+            // console.log(response.data.values[0].title);
             setCategoryTitle(response.data.values[0].title);
             setCategoryDesc(response.data.values[0].description)
         }
         catch (e) {
-            console.log(e);
+            // console.log(e);
+            navigate('/404');
         }
     }
 

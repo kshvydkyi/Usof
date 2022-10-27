@@ -47,7 +47,7 @@ exports.getActivePosts = async (req, res) =>{
             data: usersFilter}, res);
     }
     catch (e){
-        console.log(e);
+        // console.log(e);
         response.status(400, {message: `${e}`}, res);
     }
 }
@@ -205,7 +205,7 @@ exports.createNewPost = async (req, res) =>{
 exports.updatePostUser = async (req, res) => {
     const id = req.params.id;
     const token = req.params.token;
-    console.log(req.body);
+    // console.log(req.body);
     const userData = jwt.verify(token, config.jwt);
     const post = await Post.getPostById(id);
     const isPostTitle = await Post.isPostWithSuchTitleExist(req.body.title)
@@ -284,9 +284,7 @@ exports.updateCategoriesForPost = async (req, res) => {
     const {...categoriesId} = req.body;
     const userData = jwt.verify(token, config.jwt);
     const post = await Post.getPostById(id);
-    if(!categoriesId.length < 1){
-        return response.status(400, {message: `Set minimum 1 category`}, res);
-    }
+    // console.log(categoriesId);
     if (!post) {
         return response.status(404, {message: `Post with id = ${id} not found`}, res);
     }

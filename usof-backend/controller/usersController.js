@@ -10,6 +10,8 @@ const config = require('./../config');
 exports.getAllUsers = async (req, res) => {
     try {
         const allUsers = await User.getAllUsers();
+        // console.log(allUsers)
+        allUsers.sort((a, b) => a.rating > b.rating ? -1 : 1);
         const { page } = req.query;
         const parsedPage = page ? Number(page) : 1;
         const perPage = 10;
@@ -67,7 +69,7 @@ exports.getUserById = async (req, res) => {
 exports.uploadAvatar = async (req, res) => {
     // const pathFile = req.file.path.split('\\').join('/');
     const pathFile = req.file.filename;
-    console.log(pathFile)
+    // console.log(pathFile)
     const token = req.params.token;
     const userData = jwt.verify(token, config.jwt);
     try{
@@ -89,7 +91,7 @@ exports.updateUserData = async (req, res) => {
     const [{login, email}] = await User.getUserById(userData.userId);
     const isLogin = await User.isLoginExist(req.body.login);
     const isEmail = await User.isEmailExist(req.body.email);
-    console.log(email, req.body.email)
+    // console.log(email, req.body.email)
     if(isLogin && login !== req.body.login){
         return response.status(409, {message:`User with login - ${req.body.login} already exist`}, res);
 
@@ -110,7 +112,7 @@ exports.deleteUser = async (req, res) => {
     const id = req.params.user_id;
     const token = req.params.token;
     const userData = jwt.verify(token, config.jwt);
-    console.log(+id, userData.userId);
+    // console.log(+id, userData.userId);
     if(+id !== userData.userId && userData.role !== 'Admin'){
         return response.status(403, {message:"Access denied"}, res)
     }

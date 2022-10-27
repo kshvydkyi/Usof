@@ -1,23 +1,27 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "../api/axios"
 const Categories = () => {
-
     const [categories, setCategories] = useState([]);
+
+    const navigate = useNavigate()
     const getCategories = async () => {
         try {
             const response = await axios.get('/api/categories');
-            console.log(response.data.values);
+            // console.log(response.data.values);
             setCategories(response.data.values);
         }
         catch (e) {
-            console.log(e)
+            navigate('/500');
+            // console.log(e)
+            
         }
     }
     useEffect(() => {
         getCategories();
     }, [])
-    console.log(categories);
+    // console.log(categories);
     return (
         <>
             <ul className="">

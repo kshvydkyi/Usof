@@ -8,8 +8,8 @@ const connection = mysql.createConnection({
 });
 
 connection.connect((error) => {
-    if(error) return console.log('Помилка при підключенні до бази даних');
-    else return console.log('Підключення до бази даних пройшло успішно');
+    if(error) return console.log('An error occurred while connecting to the database');
+    else return console.log('The connection to the database was successful');
 });
 
 module.exports = connection.promise();
