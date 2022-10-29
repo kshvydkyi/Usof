@@ -95,7 +95,7 @@ const Admin = () => {
                     withCredentials: true
                 }
             );
-            console.log(response?.data.status, response?.data.values.message);
+            // console.log(response?.data.status, response?.data.values.message);
             setSuccess(true);
             setLoading(false);
             // document.location.reload();
@@ -122,12 +122,12 @@ const Admin = () => {
     const [deleteUserId, setDeleteUserId] = useState(0)
     const deleteUser = async () => {
         try {
-            console.log(deleteUserId);
+            // console.log(deleteUserId);
             const response = await axios.delete(`/api/users/${deleteUserId}/${currentUser.accessToken}`);
-            console.log(response);
+            // console.log(response);
         }
         catch (e) {
-            console.log(e);
+            // console.log(e);
         }
     }
 
@@ -146,10 +146,10 @@ const Admin = () => {
     const setStatus = async () => {
         try {
             const response = await axios.patch(`/api/admin/posts/set-status/${postId}/${currentUser.accessToken}`, JSON.stringify({status: statusPost}))
-            console.log(response);
+            // console.log(response);
         }
         catch (e) {
-            console.log(e);
+            // console.log(e);
         }
     }
     return (

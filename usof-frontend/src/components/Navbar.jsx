@@ -18,7 +18,7 @@ const Navbar = () => {
     useEffect(() => {
         getCategories();
     }, [])
-    console.log(categories);
+    // console.log(categories);
     return ( 
         <>   
 

@@ -88,7 +88,7 @@ const ChangeProfile = () => {
 
         }
         catch (e) {
-            console.log(e)
+            // console.log(e)
             if(e?.response.data.status === 404){
                 navigate('/404');
             }

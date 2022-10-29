@@ -24,7 +24,7 @@ export const fetchPersonalPosts = createAsyncThunk('posts/personalPosts', async 
 })
 export const fetchPostsInCategory = createAsyncThunk('post/postsInCategory', async ({ page = 1, id, token}) => {
     const response = await axios.get(`/api/categories/${id}/posts/${token}?page=${page}`);
-    console.log(response);
+    //console.log(response);
     return response.data;
 })
 export const fetchPostCategory = createAsyncThunk(
@@ -109,7 +109,7 @@ const postsSlice = createSlice({
                 state.loading = true;
             })
             .addCase(fetchUsers.fulfilled, (state, { payload }) => {
-                console.log(payload);
+                // console.log(payload);
                 state.loading = false;
                 state.allUsersPages = payload.values.meta.totalPages;
                 state.allUsers = payload.values.data
