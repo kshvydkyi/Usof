@@ -142,6 +142,7 @@ const User = () => {
                         </div>
                         {selfProfile ? <div className='header-buttons'>
                             <a className='header-user' href='/create-post'>Cтворити базу</a>
+                            {currentUser.role === 'Admin' ? <a className="header-user" href='/admin'>Адмін панель</a> : <></>}
                         </div> : <></>}
                     </div>
                 </div>

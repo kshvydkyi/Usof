@@ -198,7 +198,7 @@ exports.createNewPost = async (req, res) =>{
         response.status(200, {message:"Post created without image"}, res);
     }
     catch (e){
-        
+        console.log(e)
         response.status(500, {message: `${e}`}, res);
     }
 }

@@ -43,7 +43,6 @@ body {
 section {
     width: 100%;
     max-width: 420px;
-    min-height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -161,8 +160,8 @@ label{
 }
 .email-reg{
     background-color: rgb(68, 68, 68);
-    max-width: 500px;
-    min-height: 300px;
+    max-width: 280px;
+    margin-top: 200px;
 
 }
 .email-reg>p>a{
@@ -213,6 +212,7 @@ label{
     width: 100%;
     justify-content: space-around;
     margin-left: 30px;
+    flex-wrap: wrap;
 }
 .users-page{
     display: flex;
@@ -266,6 +266,7 @@ label{
     max-width: 420px;
     min-height: 0px;
     padding: 1rem;
+    margin-top: 200px;
 }
 .header-user{
     padding: 0;
@@ -409,6 +410,7 @@ li[class] {
     flex-wrap: wrap;
     max-width: 850px;
     justify-content: space-between;
+    justify-content: center;
 }
 .post-img-user-page{
     max-width: 360px;
@@ -479,6 +481,7 @@ li[class] {
     margin:0;
     padding: 10px;
     font-size: 16px;
+    text-align: justify;
 }
 .coment-like-block{
     margin-left: 10px;
@@ -856,3 +859,170 @@ body::-webkit-scrollbar-thumb {
 .category-title{
     text-align: center;
 }
+.admin-page-container{
+    display:flex;
+    width: 100%;
+    justify-content: space-around;
+    flex-direction: column;
+}
+.create-new-user{
+    padding: 0;
+    margin-left: 10px;
+    width: 400px;
+    height: fit-content;
+}
+.user-module{
+    display: flex;
+}
+.welcome-page-head{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.welcome-page-h1{
+    margin-right: 10px;
+}
+.welcome-page{
+    display: flex;
+    margin-top: 200px;
+    height: 100%;
+}
+footer{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    padding-left: 30px;
+    padding-right: 30px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(62, 62, 62, 0.5);
+}
+.create-post-form-title-desc{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+@media (max-width: 850px) {
+    .post-card{
+        width: 430px;
+    }
+    .post-img{
+    max-width: 400px;
+    max-height: 200px;
+    }
+    .create-post{
+        width: 430px;
+        align-items: center;
+    }
+    .create-post-forms{
+        width: 430px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .create-post-form-title-desc{
+        width: 400px;
+    }
+    .posts-user-page{
+        justify-content: center;
+    }
+    .post-title-text{
+        margin-left: 10px;
+    }
+}
+
+@media (min-width: 280px) and (max-width: 550px) {
+    .post-card{
+        width: 300px;
+    }
+    .post-img{
+    max-width: 270px;
+    max-height: 170px;
+    }
+    .create-post{
+        width: 330px;
+        align-items: center;
+    }
+    .create-post-forms{
+        width: 330px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+    .create-post-form-title-desc{
+        width: 300px;
+    }
+    .posts-user-page{
+        justify-content: center;
+    }
+    .post-title-text{
+        margin-left: 10px;
+    }
+    .container-posts{
+        justify-content: center;
+    }
+    .pages-mavbar{
+        margin-left: 5px;
+        font-size: 12px;
+        flex-wrap: wrap;
+    }
+    .navbar{
+        padding-left: 0px;
+        padding-right: 0px;
+        transition: 0.3s;
+    }
+    .site-name{
+        font-size: 12px;
+    }
+    .site-name>a{
+        margin: 0;
+    }
+    .header-user{
+        font-size: 12px;
+    }
+    .header-avatar{
+        width: 30px;
+        height: 30px;
+    }
+    .logout-img{
+        height: 20px;
+        width: 20px;
+    }
+    .w-8>img{
+        height: 30px;
+        
+    }
+    *{
+        font-size: 12px;
+    }
+    .post-title-text{
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+    .post-content{
+        font-size: 12px;
+    }
+    .post-publish-date{
+        font-size: 10px;
+    }
+    .user-page-userInfo{
+        width: 300px;
+    }
+    .user-page-post-block{
+        width: 300px;
+    } 
+    .post-img-user-page{
+        max-width: 270px;
+         max-height: 170px;
+    }
+    .flex{
+        justify-content: center;
+    flex-wrap: wrap;
+
+    }   
+    .add-coment-btn{
+        font-size: 12px;
+    }
+    .create-post-forms{
+        justify-content: center;
+    }
+    }

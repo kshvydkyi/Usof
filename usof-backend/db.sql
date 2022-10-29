@@ -75,4 +75,3 @@ SELECT * FROM categories_posts;
 SELECT * FROM comments;
 SELECT * FROM likes_post;
 SELECT * FROM likes_comment;
-

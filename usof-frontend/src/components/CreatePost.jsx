@@ -107,6 +107,7 @@ const CreatePost = () => {
             else {
                 setErrMsg('шось сталось, перелогіньтесь будь ласка')
                 setHidden();
+                console.log(err)
             }
             errRef.current.focus();
         }
@@ -183,7 +184,7 @@ const CreatePost = () => {
                 <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                 <h1>Тут створюється база</h1>
                 <div className='create-post-forms'>
-                    <form onSubmit={createPost}>
+                    <form className="create-post-form-title-desc"onSubmit={createPost}>
                         <label className="form_label" htmlFor="title">Заголовок</label>
                         <input
                             type="text"

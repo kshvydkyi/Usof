@@ -103,6 +103,10 @@ class User extends Model {
         const sql = await this.DB.query("UPDATE users SET rating = '"+newRating+"' WHERE id = '"+userId+"'");
         return;
     }
+    async deleteAllUserPosts(userId){
+        const sql = await this.DB.query("DELETE from posts WHERE author_id = '"+ userId+"'");
+        return;
+    }
     async deleteUser(id){
         const sql = await this.DB.query("DELETE FROM users WHERE id = '"+ id +"'");
         return;

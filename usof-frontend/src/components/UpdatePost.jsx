@@ -90,11 +90,12 @@ const UpdatePost = () => {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true
             })
+            navigate('/posts/?page=1')
             //console.log(updateTitleDesc);
             const updateCategories = await axios.patch(`/api/posts/update-category/${id[2]}/${user.accessToken}`, JSON.stringify(categories),
             {headers: { 'Content-Type': 'application/json' },
             withCredentials: true})
-            //console.log(updateCategories);
+            navigate('/posts/?page=1')
             // //console.log(categories[0].category.value);
         }
         catch (err) {
@@ -244,7 +245,7 @@ const UpdatePost = () => {
                             isMulti
                             // isClearable
                         />
-                        <button className="btn">Змінти базу</button>
+                       <button className="btn">Змінти базу</button>
                     </form>
                     <div className="select-image">
                         <form onSubmit={updateImage}>

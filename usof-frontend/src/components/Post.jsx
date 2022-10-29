@@ -70,7 +70,7 @@ const Post = () => {
                         <img src={authorImage && authorImage !== 'undefined' ? `${route.serverURL}/avatars/${authorImage}` : <></>} className='header-avatar' alt={'author avatar'} />
                         <a href={`/user/${authorId}`} className="post-author">{author}</a>
                     </div>
-                    <a href={`/post/${id[2]}`}>{title}</a>
+                    <a className="post-title-text" href={`/post/${id[2]}`}>{title}</a>
                     <p className='post-publish-date'>{publishDate}</p>
                 </div>
                 <div className="post-title-img">

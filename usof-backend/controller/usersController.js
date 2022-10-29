@@ -121,6 +121,7 @@ exports.deleteUser = async (req, res) => {
     if(!user){
         return response.status(404, {message: `User with id = ${id} not found`}, res);
     }
+    await User.deleteAllUserPosts(id);
     await User.deleteUser(id);
     response.status(200, {message: `User with id = ${id} deleted`}, res);
 }

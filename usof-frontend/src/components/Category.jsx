@@ -80,7 +80,7 @@ const Category = () => {
 											<img src={post.authorPhoto && post.authorPhoto !== 'undefined' ? `${route.serverURL}/avatars/${post.authorPhoto}` : <></>} className='header-avatar' alt={'author avatar'} />
 											<a href={`/user/${post.authorId}`} className="post-author">{post.author}</a>
 										</div>
-										<a href={`/post/${post.id}`}>{post.title}</a>
+										<a className="post-title-text" href={`/post/${post.id}`}>{post.title}</a>
 										<p className='post-publish-date'>{formatedDate}</p>
 									</div>
 									<div className="post-title-img">
